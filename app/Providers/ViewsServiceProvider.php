@@ -4,12 +4,15 @@ namespace App\Providers;
 
 use App\Contracts\BookService;
 use App\Contracts\DefaultBookService;
+use App\View\Components\Card;
 use App\View\Components\UserControl;
+
 //use App\View\Components\SearchBar;
 use App\View\Components\SideNav;
 use App\View\Components\TopNav;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+
 //use App\View\Components\SideNavButton;
 
 class ViewsServiceProvider extends ServiceProvider
@@ -39,5 +42,7 @@ class ViewsServiceProvider extends ServiceProvider
         Blade::component('topnav-container', TopNav::class);
 //        Blade::component('searchbar-component', SearchBar::class);
         Blade::component('user-control-component', UserControl::class);
+
+        Blade::component('card', Card::class);
     }
 }
