@@ -1,0 +1,35 @@
+{{--
+    Breadcrumb model
+
+    title
+    url
+    active
+
+--}}
+
+<div class="col-lg-6 col-7">
+    <h6 class="h2 text-white d-inline-block mb-0">Navigations</h6>
+    <nav
+        aria-label="breadcrumb"
+        class="d-none d-md-inline-block ml-md-4"
+    >
+        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+            <li class="breadcrumb-item">
+                <a href="/"><i class="fas fa-home"></i></a>
+            </li>
+
+            @if (isset($routes) && count($routes) > 0)
+                @foreach($routes as $route)
+                    <li class="breadcrumb-item{{ $route['active'] ? ' active' : '' }}"
+                        aria-current="page">
+                        @isset($route['url'])
+                            <a href="{{ $route['url'] }}">{{ $route['title'] }}</a>
+                        @else
+                            {{ $route['title'] }}
+                        @endisset
+                    </li>
+                @endforeach
+            @endif
+        </ol>
+    </nav>
+</div>

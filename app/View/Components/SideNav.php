@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use Illuminate\Support\Facades\Request;
 use Illuminate\View\Component;
 
 class SideNav extends Component
@@ -16,46 +17,46 @@ class SideNav extends Component
             [
                 'text' => 'Dashboard',
                 'icon' => 'ni-tv-2 text-primary',
-                'url' => '#',
-                'active' => true
+                'url' => '',
+                'active' => Request::is('/')
             ],
             [
-                'text' => 'Icons',
-                'icon' => 'ni-planet text-orange',
-                'url' => '#',
-                'active' => false
+                'text' => 'Books',
+                'icon' => 'ni-books text-orange',
+                'url' => 'book',
+                'active' => Request::is('book')
             ],
             [
-                'text' => 'Google',
-                'icon' => 'ni-pin-3 text-primary',
-                'url' => '#',
-                'active' => false
+                'text' => 'Order',
+                'icon' => 'ni-credit-card text-primary',
+                'url' => 'order',
+                'active' => Request::is('order')
             ],
             [
-                'text' => 'Profile',
+                'text' => 'Customers',
                 'icon' => 'ni-single-02 text-yellow',
-                'url' => '#',
-                'active' => false
+                'url' => 'customer',
+                'active' => Request::is('customer')
             ],
         ];
         $this->userNavigators = [
             [
                 'text' => 'Profile',
-                'icon' => 'ni-spaceship',
-                'url' => '#',
-                'active' => false
+                'icon' => 'ni-single-02',
+                'url' => 'profile',
+                'active' => Request::is('profile')
             ],
             [
                 'text' => 'Settings',
-                'icon' => 'ni-spaceship',
-                'url' => '#',
-                'active' => false
+                'icon' => 'ni-ui-04',
+                'url' => 'setting',
+                'active' => Request::is('setting')
             ],
         ];
     }
 
     public function render()
     {
-        return view('components.side-nav');
+        return view('containers.side-nav');
     }
 }

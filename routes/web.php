@@ -14,9 +14,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages.welcome');
+    return view('pages.dashboard');
 });
 
-Route::get('/books', function () {
+Route::get('/book', function () {
     return view('pages.books');
+});
+
+Route::get('/order', function () {
+    return view('pages.order');
+});
+
+Route::get('/customer', function () {
+    return view('pages.customers');
+});
+
+Route::get('/profile', function () {
+    return view('pages.profile');
+});
+
+Route::get('/setting', function () {
+    return view('pages.settings');
 });

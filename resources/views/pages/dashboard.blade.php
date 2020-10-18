@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="header-body">
                 <div class="row align-items-center py-4">
-                    @include('components.breadcrumb')
+                    @include('containers.breadcrumb')
                     @include('components.control')
                 </div>
             </div>
@@ -19,24 +19,51 @@
         <div class="row">
             <div class="col-xl-8">
                 <x-card>
-                    <div class="chart">
-                        <!-- Chart wrapper -->
-                        <canvas id="chart-sales-dark" class="chart-canvas"></canvas>
-                    </div>
+                    @slot('card_header')
+                        Custom Header
+                    @endslot
+
+                    @slot('card_sub_header')
+                        Custom Sub Header
+                    @endslot
+
+                    @slot('card_body')
+                        <div class="chart">
+                            <!-- Chart wrapper -->
+                            <canvas id="chart-sales-dark" class="chart-canvas"></canvas>
+                        </div>
+                    @endslot
                 </x-card>
             </div>
             <div class="col-xl-4">
                 <x-card>
-                    <!-- Chart -->
-                    <div class="chart">
-                        <canvas id="chart-bars" class="chart-canvas"></canvas>
-                    </div>
+                    @slot('card_header')
+                        Custom Header
+                    @endslot
+
+                    @slot('card_sub_header')
+                        Custom Sub Header
+                    @endslot
+
+                    @slot('card_body')
+                        <div class="chart">
+                            <canvas id="chart-bars" class="chart-canvas"></canvas>
+                        </div>
+                    @endslot
                 </x-card>
             </div>
         </div>
         <div class="row">
             <div class="col-xl-8">
                 <x-card>
+                    @slot('card_header')
+                        Responsive table
+                    @endslot
+
+                    @slot('card_sub_header')
+                        Custom Sub Header
+                    @endslot
+
                     <div class="table-responsive">
                         <!-- Projects table -->
                         <table class="table align-items-center table-flush">
@@ -99,6 +126,14 @@
             </div>
             <div class="col-xl-4">
                 <x-card>
+                    @slot('card_header')
+                        Responsive table
+                    @endslot
+
+                    @slot('card_sub_header')
+                        Custom Sub Header
+                    @endslot
+
                     <div class="table-responsive">
                         <!-- Projects table -->
                         <table class="table align-items-center table-flush">

@@ -2,11 +2,11 @@
     <table class="table align-items-center table-flush">
         <thead class="thead-light">
         <tr>
-            <th scope="col" class="sort" data-sort="name">Project</th>
-            <th scope="col" class="sort" data-sort="budget">Budget</th>
+            <th scope="col" class="sort" data-sort="name">Title</th>
+            <th scope="col" class="sort" data-sort="budget">Author</th>
             <th scope="col" class="sort" data-sort="status">Status</th>
-            <th scope="col">Users</th>
-            <th scope="col" class="sort" data-sort="completion">Completion</th>
+            <th scope="col">Pricing</th>
+            <th scope="col" class="sort" data-sort="completion">Publisher</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -26,10 +26,10 @@
                 $2500 USD
             </td>
             <td>
-                      <span class="badge badge-dot mr-4">
-                        <i class="bg-warning"></i>
-                        <span class="status">pending</span>
-                      </span>
+                <span class="badge badge-dot mr-4">
+                    <i class="bg-warning"></i>
+                    <span class="status">pending</span>
+                </span>
             </td>
             <td>
                 <div class="avatar-group">
