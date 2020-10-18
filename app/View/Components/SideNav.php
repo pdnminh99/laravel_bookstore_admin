@@ -27,7 +27,7 @@ class SideNav extends Component
                 'active' => Request::is('book')
             ],
             [
-                'text' => 'Order',
+                'text' => 'Orders',
                 'icon' => 'ni-credit-card text-primary',
                 'url' => 'order',
                 'active' => Request::is('order')

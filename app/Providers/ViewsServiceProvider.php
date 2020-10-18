@@ -7,6 +7,7 @@ use App\Contracts\DefaultBookService;
 use App\View\Components\Breadcrumb;
 use App\View\Components\Card;
 use App\View\Components\Paginator;
+use App\View\Components\TabularStatus;
 use App\View\Components\UserControl;
 
 //use App\View\Components\SearchBar;
@@ -46,5 +47,6 @@ class ViewsServiceProvider extends ServiceProvider
         Blade::component('card', Card::class);
         Blade::component('breadcrumb', Breadcrumb::class);
         Blade::component('paginator', Paginator::class);
+        Blade::component('tabular-status', TabularStatus::class);
     }
 }

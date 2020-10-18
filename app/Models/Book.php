@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\View\Models\TabularField;
+use App\View\Models\TabularRecord;
 use Illuminate\Database\Eloquent\Model;
 
-class Book extends Model
+class Book extends Model implements TabularRecord
 {
     public string $id;
 
@@ -19,6 +21,11 @@ class Book extends Model
     public int $pages;
 
     public int $in_stock;
+
+    public static function new(string $title, string $author, string $publisher)
+    {
+        return new Book('1', $title, $author, $publisher, 2000, 100, 100);
+    }
 
     public function __construct(
         string $id,
@@ -54,4 +61,20 @@ class Book extends Model
     const CREATED_AT = 'creation_date';
 
     const UPDATED_AT = 'last_update';
+
+    public function get_fields()
+    {
+        return [
+            TabularField::parse_text_w_thumbnail($this->title, 'img/theme/bootstrap.jpg', '#'),
+            TabularField::parse_text($this->author),
+            TabularField::parse_text($this->publisher),
+            TabularField::parse_status('in stock'),
+            TabularField::parse_text('999$')
+        ];
+    }
+
+    public function get_actions()
+    {
+        return ['details', 'edit', 'delete'];
+    }
 }

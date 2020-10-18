@@ -25,7 +25,7 @@
                         This table is for admins only
                     @endslot
 
-                    @include('containers.table')
+                    <x-table :headers="$headers" :records="$books"></x-table>
 
                     @slot('card_footer')
                         <x-paginator current="1" count="5" route="'book'"></x-paginator>

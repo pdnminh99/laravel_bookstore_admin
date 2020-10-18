@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Book;
+use App\View\Models\TabularField;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +20,13 @@ Route::get('/', function () {
 });
 
 Route::get('/book', function () {
-    return view('pages.books');
+    return view('pages.books', [
+        'books' => [
+            Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express'),
+            Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express')
+        ],
+        'headers' => ['title', 'author', 'publisher', 'status', 'price', '']
+    ]);
 });
 
 Route::get('/order', function () {
