@@ -24,8 +24,7 @@ Route::get('/book', function () {
         'books' => [
             Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express'),
             Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express')
-        ],
-        'headers' => ['title', 'author', 'publisher', 'status', 'price', '']
+        ]
     ]);
 });
 

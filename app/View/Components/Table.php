@@ -11,18 +11,14 @@ class Table extends Component
 
     public array $records;
 
-    public function __construct(array $headers, array $records)
+    public function __construct(array $records)
     {
-        // Input assertion
-        foreach ($headers as $header) {
-            if (is_string($header)) continue;
-            throw new \Error("Invalid value passed into table.");
-        }
         foreach ($records as $record) {
             if ($record instanceof TabularRecord) continue;
             throw new \Error("Invalid value passed into table.");
         }
-        $this->headers = $headers;
+        $is_exist = count($records) > 0;
+        $this->headers = $is_exist ? [] : ${get_class($records[0])}::get_headers();
         $this->records = $records;
     }
 

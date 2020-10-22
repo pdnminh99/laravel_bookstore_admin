@@ -33,4 +33,9 @@ abstract class TabularField
     {
         return new TabularStatusField($content, $status, $route, FieldType::STATUS);
     }
+
+    public static function new_actions_builder(?string $route = null): TabularActionsBuilder
+    {
+        return new TabularActionsBuilder($route);
+    }
 }

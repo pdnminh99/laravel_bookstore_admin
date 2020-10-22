@@ -28,6 +28,11 @@
                 <x-tabular-status :message="$field->content" :status="$field->status"></x-tabular-status>
             </td>
             @break
+            @case(\App\View\Models\FieldType::ACTIONS)
+            <td class="text-right">
+                @include('components.tabular.action', ['actions'=>$field->actions])
+            </td>
+            @break
         @endswitch
     @endforeach
     {{--    <td>--}}
@@ -35,8 +40,5 @@
     {{--    </td>--}}
     {{--    <td>--}}
     {{--        @include('components.tabular.progress')--}}
-    {{--    </td>--}}
-    {{--    <td class="text-right">--}}
-    {{--        @include('components.tabular.action', $row->get_actions())--}}
     {{--    </td>--}}
 </tr>

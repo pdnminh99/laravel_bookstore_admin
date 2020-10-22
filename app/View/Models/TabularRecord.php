@@ -6,5 +6,5 @@ interface TabularRecord
 {
     public function get_fields();
 
-    public function get_actions();
+    public static function get_headers();
 }

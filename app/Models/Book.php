@@ -69,12 +69,17 @@ class Book extends Model implements TabularRecord
             TabularField::parse_text($this->author),
             TabularField::parse_text($this->publisher),
             TabularField::parse_status('in stock'),
-            TabularField::parse_text('999$')
+            TabularField::parse_text('999$'),
+            TabularField::new_actions_builder('book')
+                ->add_action('details', '')
+                ->add_action('edit', '')
+                ->add_action('delete', '')
+                ->build()
         ];
     }
 
-    public function get_actions()
+    public static function get_headers()
     {
-        return ['details', 'edit', 'delete'];
+        return ['title', 'author', 'publisher', 'status', 'price', ''];
     }
 }
