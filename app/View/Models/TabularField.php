@@ -19,19 +19,14 @@ abstract class TabularField
         // TODO implement this.
     }
 
-    public static function parse_text(string $content, ?string $route = null): TabularTextField
+    public static function parse_text(string $content, ?string $thumbnail = null, ?string $route = null): TabularTextField
     {
-        return new TabularTextField($content, $route, FieldType::TEXT);
-    }
-
-    public static function parse_text_w_thumbnail(string $content, ?string $thumbnail, ?string $route = null): TabularTextWThumbnailField
-    {
-        return new TabularTextWThumbnailField($content, $thumbnail, $route, FieldType::TEXT_W_THUMBNAIL);
+        return new TabularTextField($content, $thumbnail, $route);
     }
 
     public static function parse_status(string $content, string $status = 'success', ?string $route = null): TabularStatusField
     {
-        return new TabularStatusField($content, $status, $route, FieldType::STATUS);
+        return new TabularStatusField($content, $status, $route);
     }
 
     public static function new_actions_builder(?string $route = null): TabularActionsBuilder

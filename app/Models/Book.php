@@ -65,7 +65,7 @@ class Book extends Model implements TabularRecord
     public function get_fields()
     {
         return [
-            TabularField::parse_text_w_thumbnail($this->title, 'img/theme/bootstrap.jpg', '#'),
+            TabularField::parse_text($this->title),
             TabularField::parse_text($this->author),
             TabularField::parse_text($this->publisher),
             TabularField::parse_status('in stock'),

@@ -1,43 +1,42 @@
 <tr>
     @foreach($row->get_fields() as $field)
         @switch($field->type)
-            @case(\App\View\Models\FieldType::TEXT_W_THUMBNAIL)
-            <th scope="row">
-                <div class="media align-items-center">
-                    @if(isset($fied->thumbnail) && isset($field->route))
-                        <a href="{{ $field->route }}" class="avatar rounded-circle mr-3">
-                            <img alt="{{ $field->content }}" src="{{ asset($field->thumbnail) }}">
-                        </a>
-                    @elseif(isset($field->thumbnail))
-                        <span class="avatar rounded-circle mr-3">
-                            <img alt="{{ $field->content }}" src="{{ asset($field->thumbnail) }}">
-                        </span>
-                    @endif
-
-                    <div class="media-body">
-                        @isset($field->route)
-                            <span class="name mb-0 text-sm">
-                                <a href="{{ $field->route }}">{{ $field->content ?? '' }}</a>
-                            </span>
-                        @else
-                            <span class="name mb-0 text-sm">{{ $field->content ?? '' }}</span>
-                        @endisset
-                    </div>
-                </div>
-            </th>
-            @break
             @case(\App\View\Models\FieldType::TEXT)
-            <td class="budget">
-                {{ $field->content ?? 'undefined' }}
-            </td>
+            @isset($field->thumbnail)
+                @if($loop->first)
+                    <th scope="row">
+                        @include('components.tabular.text-with-thumbnail-field', ['thumbnail' => $field->thumbnail, 'route' => $field->route, 'content' => $field->content])
+                    </th>
+                @else
+                    <td>
+                        @include('components.tabular.text-with-thumbnail-field', ['thumbnail' => $field->thumbnail, 'route' => $field->route, 'content' => $field->content])
+                    </td>
+                @endif
+            @else
+                @if($loop->first)
+                    <th scope="row">
+                        {{ $field->content ?? '' }}
+                    </th>
+                @else
+                    <td>
+                        {{ $field->content ?? '' }}
+                    </td>
+                @endif
+            @endif
             @break
             @case(\App\View\Models\FieldType::STATUS)
-            <td>
-                <x-tabular-status :message="$field->content" :status="$field->status"></x-tabular-status>
-            </td>
+            @if($loop->first)
+                <th scope="row">
+                    <x-tabular-status :message="$field->content" :status="$field->status"></x-tabular-status>
+                </th>
+            @else
+                <td>
+                    <x-tabular-status :message="$field->content" :status="$field->status"></x-tabular-status>
+                </td>
+            @endif
             @break
             @case(\App\View\Models\FieldType::ACTIONS)
-            <td class="text-right">
+            <td>
                 @include('components.tabular.action', ['actions'=>$field->actions])
             </td>
             @break

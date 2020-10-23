@@ -6,9 +6,12 @@ class TabularTextField extends TabularField
 {
     public string $content;
 
-    public function __construct(string $content, ?string $route, string $type)
+    public ?string $thumbnail;
+
+    public function __construct(string $content, ?string $thumbnail = null, ?string $route = null)
     {
-        parent::__construct($route, $type);
+        parent::__construct($route, FieldType::TEXT);
         $this->content = $content;
+        $this->thumbnail = $thumbnail;
     }
 }
