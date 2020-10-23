@@ -5,7 +5,20 @@
     </a>
     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
         @foreach($actions as $action)
-            <a class="dropdown-item" href="{{ $action['route'] }}">{{ $action['name'] }}</a>
+            @if(!isset($action['modal_message']))
+                <a class="dropdown-item"
+                   href="{{ $action['route'] ?? 'javascript:void(0)' }}"
+                >{{ $action['name'] ?? '' }}</a>
+            @else
+                <button class="dropdown-item"
+                        data-toggle="modal"
+                        data-target="#confirm-modal"
+                        onclick="registerConfirmRoute('/delete')"
+                >
+                    {{ $action['name'] ?? '' }}
+                </button>
+            @endif
         @endforeach
+
     </div>
 </div>

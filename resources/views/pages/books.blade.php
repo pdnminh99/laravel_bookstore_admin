@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('header')
+    @include('components.confirm-modal')
+@endsection
+
 @section('content')
 
     <div class="header bg-primary pb-6">

@@ -19,6 +19,12 @@ class TabularActionsBuilder
         return $this;
     }
 
+    public function add_action_w_modal_confirm(string $name, string $route, string $modal_message): TabularActionsBuilder
+    {
+        array_push($this->actions, ['name' => $name, 'route' => $route, 'modal_message' => $modal_message]);
+        return $this;
+    }
+
     public function build(): TabularActionsField
     {
         return new TabularActionsField($this->actions, $this->route, FieldType::ACTIONS);

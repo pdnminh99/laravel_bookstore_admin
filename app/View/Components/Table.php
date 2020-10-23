@@ -18,7 +18,7 @@ class Table extends Component
             throw new \Error("Invalid value passed into table.");
         }
         $is_exist = count($records) > 0;
-        $this->headers = $is_exist ? [] : ${get_class($records[0])}::get_headers();
+        $this->headers = $is_exist ? get_class($records[0])::get_headers() : [];
         $this->records = $records;
     }
 

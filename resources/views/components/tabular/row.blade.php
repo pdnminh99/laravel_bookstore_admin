@@ -4,16 +4,24 @@
             @case(\App\View\Models\FieldType::TEXT_W_THUMBNAIL)
             <th scope="row">
                 <div class="media align-items-center">
-                    @if(isset($field->route))
+                    @if(isset($fied->thumbnail) && isset($field->route))
                         <a href="{{ $field->route }}" class="avatar rounded-circle mr-3">
                             <img alt="{{ $field->content }}" src="{{ asset($field->thumbnail) }}">
                         </a>
-                    @else
-                        <img alt="{{ $field->content }}" src="{{ asset($field->thumbnail) }}">
+                    @elseif(isset($field->thumbnail))
+                        <span class="avatar rounded-circle mr-3">
+                            <img alt="{{ $field->content }}" src="{{ asset($field->thumbnail) }}">
+                        </span>
                     @endif
 
                     <div class="media-body">
-                        <span class="name mb-0 text-sm">{{ $field->content }}</span>
+                        @isset($field->route)
+                            <span class="name mb-0 text-sm">
+                                <a href="{{ $field->route }}">{{ $field->content ?? '' }}</a>
+                            </span>
+                        @else
+                            <span class="name mb-0 text-sm">{{ $field->content ?? '' }}</span>
+                        @endisset
                     </div>
                 </div>
             </th>

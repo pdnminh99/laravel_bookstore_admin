@@ -73,7 +73,7 @@ class Book extends Model implements TabularRecord
             TabularField::new_actions_builder('book')
                 ->add_action('details', '')
                 ->add_action('edit', '')
-                ->add_action('delete', '')
+                ->add_action_w_modal_confirm('delete', '', "Are you sure to delete $this->title")
                 ->build()
         ];
     }

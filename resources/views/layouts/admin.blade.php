@@ -35,6 +35,10 @@
 </head>
 <body>
 
+@hasSection('header')
+    @yield('header')
+@endif
+
 <x-side-nav></x-side-nav>
 
 <div class="main-content" id="panel">
