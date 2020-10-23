@@ -20,11 +20,13 @@ class Book extends Model implements TabularRecord
 
     public int $pages;
 
+    public int $price;
+
     public int $in_stock;
 
-    public static function new(string $title, string $author, string $publisher)
+    public static function new(string $title, string $author, string $publisher, int $price = 0)
     {
-        return new Book('1', $title, $author, $publisher, 2000, 100, 100);
+        return new Book('1', $title, $author, $publisher, 2000, 100, 100, $price);
     }
 
     public function __construct(
@@ -33,7 +35,7 @@ class Book extends Model implements TabularRecord
         string $author,
         string $publisher,
         int $year_of_publishing, int $pages,
-        int $in_stock)
+        int $in_stock, int $price)
     {
         $this->id = $id;
         $this->title = $title;
@@ -42,6 +44,7 @@ class Book extends Model implements TabularRecord
         $this->year_of_publishing = $year_of_publishing;
         $this->pages = $pages;
         $this->in_stock = $in_stock;
+        $this->price = $price;
     }
 
     protected $fillable = [
