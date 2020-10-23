@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Book;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,11 +20,15 @@ Route::get('/', function () {
 });
 
 Route::get('/book', function () {
+    $page_number = Request::query('page') ?? 1;
+
     return view('pages.books', [
         'books' => [
             Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express'),
             Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express')
-        ]
+        ],
+        'page_number' => $page_number,
+        'pages' => 20
     ]);
 });
 

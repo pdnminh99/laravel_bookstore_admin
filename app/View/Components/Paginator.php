@@ -2,7 +2,6 @@
 
 namespace App\View\Components;
 
-use App\View\Models\PaginatorControl;
 use Illuminate\View\Component;
 
 class Paginator extends Component
@@ -35,30 +34,27 @@ class Paginator extends Component
         $count = $this->count;
         $current = $this->current;
         $route = $this->route;
-        $pages = [];
+        $pages_numbers = [];
 
-//        if ($count < 7) {
-        for ($p = 1; $p <= $count; $p++)
-            array_push($pages, [
-                'number' => $p,
-                'route' => "$route/$p",
-                'active' => $p === $current
-            ]);
-//        } else {
-//            for ($p = 1; $p <= 5; $p++)
-//                array_push($pages, [
-//                    'number' => $p,
-//                    'route' => "$route/$p",
-//                    'active' => $p === $current
-//                ]);
-//            array_push($pages, null);
-//            array_push($pages, [
-//                'number' => $p,
-//                'route' => "$route/$p",
-//                'active' => $p === $current
-//            ]);
-//        }
-        return $pages;
+        $cursor = $current - 3;
+        while (count($pages_numbers) < 7 && $cursor <= $count) {
+            if ($cursor > 0) array_push($pages_numbers, $cursor);
+            $cursor++;
+        }
+
+        $cursor = $pages_numbers[0] - 1;
+        while (count($pages_numbers) < 7 && $cursor > 0) {
+            array_unshift($pages_numbers, $cursor);
+            $cursor--;
+        }
+
+        return array_map(function (?int $page_num) use ($current, $route) {
+            return [
+                'number' => $page_num,
+                'route' => "$route?page=$page_num",
+                'active' => $page_num === $current
+            ];
+        }, $pages_numbers);
     }
 
     public function render()

@@ -21,14 +21,14 @@
                 </li>
             @elseif($page['active'])
                 <li class="page-item active">
-                    <a class="page-link" href="{{ $page['route'] }}">
+                    <a class="page-link" href="javascript:void(0)">
                         {{ $page['number'] }}
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
             @else
                 <li class="page-item">
-                    <a class="page-link" href="javascript:void(0)">
+                    <a class="page-link" href="{{ $page['route'] }}">
                         {{ $page['number'] }}
                     </a>
                 </li>
