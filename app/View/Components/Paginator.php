@@ -48,7 +48,23 @@ class Paginator extends Component
             $cursor--;
         }
 
+        $first_num = $pages_numbers[0];
+        if ($first_num == 2) array_unshift($pages_numbers, 1);
+        else if ($first_num > 2) {
+            array_unshift($pages_numbers, null);
+            array_unshift($pages_numbers, 1);
+        }
+
+        $len = count($pages_numbers);
+        $last_num = $pages_numbers[$len - 1];
+        if ($last_num == $count - 1) array_push($pages_numbers, $count);
+        else if ($last_num < $count - 1) {
+            array_push($pages_numbers, null);
+            array_push($pages_numbers, $count);
+        }
+
         return array_map(function (?int $page_num) use ($current, $route) {
+            if (is_null($page_num)) return null;
             return [
                 'number' => $page_num,
                 'route' => "$route?page=$page_num",
