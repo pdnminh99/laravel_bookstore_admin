@@ -8,7 +8,7 @@
     <x-side-nav></x-side-nav>
 
     <div class="main-content" id="panel">
-        <x-top-nav></x-top-nav>
+        <x-top-nav :username="$username"></x-top-nav>
         @hasSection('content')
             @yield('content')
         @endif

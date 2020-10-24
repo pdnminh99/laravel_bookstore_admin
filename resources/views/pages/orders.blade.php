@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="header-body">
                 <div class="row align-items-center py-4">
-                    <x-breadcrumb :routes="[['title' => 'Customer', 'active' => true]]"></x-breadcrumb>
+                    <x-breadcrumb :routes="[['title' => 'Order', 'active' => true]]"></x-breadcrumb>
                     @include('components.control')
                 </div>
             </div>
@@ -22,17 +22,17 @@
             <div class="col">
                 <x-card>
                     @slot('card_header')
-                        Customers
+                        Orders
                     @endslot
 
                     @slot('card_sub_header')
                         This table is for admins only
                     @endslot
 
-                    <x-table :records="$customers"></x-table>
+                    <x-table :records="$orders"></x-table>
 
                     @slot('card_footer')
-                        <x-paginator :current="$page_number" :count="$pages" route="customer"></x-paginator>
+                        <x-paginator :current="$page_number" :count="$pages" route="order"></x-paginator>
                     @endslot
                 </x-card>
             </div>

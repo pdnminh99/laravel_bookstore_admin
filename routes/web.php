@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages.dashboard');
+    return view('pages.dashboard', ['username' => 'Sherlock Holmes']);
 });
 
 Route::get('/login', function () {
@@ -37,25 +37,42 @@ Route::get('/book', function () {
             Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express')
         ],
         'page_number' => $page_number,
-        'pages' => 20
+        'pages' => 20,
+        'username' => 'Sherlock Holmes'
     ]);
 });
 
 Route::get('/order', function () {
-    return view('pages.order');
+    $page_number = Request::query('page') ?? 1;
+
+    return view('pages.orders', [
+        'orders' => [],
+        'page_number' => $page_number,
+        'pages' => 20,
+        'username' => 'Sherlock Holmes'
+    ]);
 });
 
 Route::get('/customer', function () {
-    return view('pages.customers');
+    $page_number = Request::query('page') ?? 1;
+
+    return view('pages.customers', [
+        'customers' => [],
+        'page_number' => $page_number,
+        'pages' => 20,
+        'username' => 'Sherlock Holmes'
+    ]);
 });
 
 Route::get('/profile', function () {
-    return view('pages.profile', ['user' => new User(
-        '123', 'teddybear123', 'teddy@gmail.com',
-        'Mr', 'Bean', '221B Baker Street',
-        'London', 'UK', 'private detective')]);
+    return view('pages.profile', [
+        'user' => new User(
+            '123', 'teddybear123', 'teddy@gmail.com',
+            'Mr', 'Bean', '221B Baker Street',
+            'London', 'UK', 'private detective'),
+        'username' => 'Sherlock Holmes']);
 });
 
 Route::get('/setting', function () {
-    return view('pages.settings');
+    return view('pages.settings', ['username' => 'Sherlock Holmes']);
 });
