@@ -2,7 +2,7 @@
     @isset($card_header)
         <div class="card-header bg-transparent">
             <div class="row align-items-center">
-                <div class="col">
+                <div class="col-8">
                     <h6 class="text-uppercase text-muted ls-1 mb-1">
                         {{ $card_header }}
                     </h6>
@@ -11,6 +11,13 @@
                         <h5 class="h3 mb-0">{{ $card_sub_header }}</h5>
                     @endisset
                 </div>
+
+                @isset($card_action)
+                    <div class="col-4 text-right">
+                        <a href="{{ $card_action['route'] }}"
+                           class="btn btn-sm btn-primary">{{ $card_action['name'] }}</a>
+                    </div>
+                @endisset
             </div>
         </div>
     @endisset

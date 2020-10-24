@@ -16,4 +16,4 @@
     </div>
 </div>
 
-@include('components.auth.footer')
+@include('components.footer')
