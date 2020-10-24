@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\FortifyServiceProvider;
+
 return [
 
     /*
@@ -174,8 +176,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        FortifyServiceProvider::class,
 
-        // My custom providers =)))
+        // My custom providers
         App\Providers\ViewsServiceProvider::class
     ],
 

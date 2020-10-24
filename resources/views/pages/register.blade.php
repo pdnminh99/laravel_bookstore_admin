@@ -6,13 +6,51 @@
             <div class="text-center text-muted mb-4">
                 <small>Sign up with credentials</small>
             </div>
-            <form role="form">
+            <form role="form" method="POST" action="/register">
+                @csrf
+
+                @error('name')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ $message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @enderror
+
+                @error('email')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ $message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @enderror
+
+                @error('password')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ $message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @enderror
+
+                @error('password_confirmation')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ $message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @enderror
+
                 <div class="form-group">
                     <div class="input-group input-group-merge input-group-alternative mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                         </div>
-                        <input class="form-control" placeholder="Name" type="text">
+                        <input class="form-control" name="name" placeholder="Name" type="text">
                     </div>
                 </div>
                 <div class="form-group">
@@ -20,7 +58,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                         </div>
-                        <input class="form-control" placeholder="Email" type="email">
+                        <input class="form-control" name="email" placeholder="Email" type="email">
                     </div>
                 </div>
                 <div class="form-group">
@@ -28,9 +66,20 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                         </div>
-                        <input class="form-control" placeholder="Password" type="password">
+                        <input class="form-control" name="password" placeholder="Password" type="password">
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="input-group input-group-merge input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                        </div>
+                        <input class="form-control" name="password_confirmation" placeholder="Password Confirm"
+                               type="password">
+                    </div>
+                </div>
+
                 <div class="text-muted font-italic"><small>password strength: <span
                             class="text-success font-weight-700">strong</span></small></div>
                 <div class="row my-4">
@@ -44,7 +93,7 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary mt-4">Create account</button>
+                    <button type="submit" class="btn btn-primary mt-4">Create account</button>
                 </div>
             </form>
         </div>

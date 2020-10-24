@@ -4,6 +4,7 @@ use App\Models\Book;
 use App\Models\User;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Fortify;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,62 +18,73 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages.dashboard', ['username' => 'Sherlock Holmes']);
+    return redirect('/home');
 });
 
-Route::get('/login', function () {
+Fortify::loginView(function () {
     return view('pages.login');
 });
 
-Route::get('/register', function () {
+Fortify::registerView(function () {
     return view('pages.register');
 });
 
-Route::get('/book', function () {
-    $page_number = Request::query('page') ?? 1;
-
-    return view('pages.books', [
-        'books' => [
-            Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express'),
-            Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express')
-        ],
-        'page_number' => $page_number,
-        'pages' => 20,
-        'username' => 'Sherlock Holmes'
-    ]);
+Fortify::verifyEmailView(function () {
+    return view('pages.verify-email');
 });
 
-Route::get('/order', function () {
-    $page_number = Request::query('page') ?? 1;
+Route::middleware(['verified'])->group(function () {
+    Route::get('/home', function () {
+        return view('pages.dashboard', ['username' => 'Sherlock Holmes']);
+    });
 
-    return view('pages.orders', [
-        'orders' => [],
-        'page_number' => $page_number,
-        'pages' => 20,
-        'username' => 'Sherlock Holmes'
-    ]);
-});
+    Route::get('/book', function () {
+        $page_number = Request::query('page') ?? 1;
 
-Route::get('/customer', function () {
-    $page_number = Request::query('page') ?? 1;
+        return view('pages.books', [
+            'books' => [
+                Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express'),
+                Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express')
+            ],
+            'page_number' => $page_number,
+            'pages' => 20,
+            'username' => 'Sherlock Holmes'
+        ]);
+    });
 
-    return view('pages.customers', [
-        'customers' => [],
-        'page_number' => $page_number,
-        'pages' => 20,
-        'username' => 'Sherlock Holmes'
-    ]);
-});
+    Route::get('/order', function () {
+        $page_number = Request::query('page') ?? 1;
 
-Route::get('/profile', function () {
-    return view('pages.profile', [
-        'user' => new User(
-            '123', 'teddybear123', 'teddy@gmail.com',
-            'Mr', 'Bean', '221B Baker Street',
-            'London', 'UK', 'private detective'),
-        'username' => 'Sherlock Holmes']);
-});
+        return view('pages.orders', [
+            'orders' => [],
+            'page_number' => $page_number,
+            'pages' => 20,
+            'username' => 'Sherlock Holmes'
+        ]);
+    });
 
-Route::get('/setting', function () {
-    return view('pages.settings', ['username' => 'Sherlock Holmes']);
+    Route::get('/customer', function () {
+        $page_number = Request::query('page') ?? 1;
+
+        return view('pages.customers', [
+            'customers' => [],
+            'page_number' => $page_number,
+            'pages' => 20,
+            'username' => 'Sherlock Holmes'
+        ]);
+    });
+
+    Route::get('/profile', function () {
+        return view('pages.profile', [
+            'user' => new User(
+                '123', 'teddybear123', 'teddy@gmail.com',
+                'Mr', 'Bean', '221B Baker Street',
+                'London', 'UK', 'private detective'),
+            'username' => 'Sherlock Holmes']);
+    });
+
+    Route::get('/setting', function () {
+        return view('pages.settings', ['username' => 'Sherlock Holmes']);
+    });
+
 });
