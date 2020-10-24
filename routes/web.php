@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Book;
+use App\Models\User;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -49,7 +50,10 @@ Route::get('/customer', function () {
 });
 
 Route::get('/profile', function () {
-    return view('pages.profile');
+    return view('pages.profile', ['user' => new User(
+        '123', 'teddybear123', 'teddy@gmail.com',
+        'Mr', 'Bean', '221B Baker Street',
+        'London', 'UK', 'private detective')]);
 });
 
 Route::get('/setting', function () {

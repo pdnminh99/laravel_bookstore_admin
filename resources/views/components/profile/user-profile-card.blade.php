@@ -17,36 +17,36 @@
     </div>
 
     <div class="card-body pt-0">
-        <div class="row">
-            <div class="col">
-                <div class="card-profile-stats d-flex justify-content-center">
-                    <div>
-                        <span class="heading">22</span>
-                        <span class="description">Friends</span>
-                    </div>
-                    <div>
-                        <span class="heading">10</span>
-                        <span class="description">Photos</span>
-                    </div>
-                    <div>
-                        <span class="heading">89</span>
-                        <span class="description">Comments</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {{--        <div class="row">--}}
+        {{--            <div class="col">--}}
+        {{--                <div class="card-profile-stats d-flex justify-content-center">--}}
+        {{--                    <div>--}}
+        {{--                        <span class="heading">22</span>--}}
+        {{--                        <span class="description">Friends</span>--}}
+        {{--                    </div>--}}
+        {{--                    <div>--}}
+        {{--                        <span class="heading">10</span>--}}
+        {{--                        <span class="description">Photos</span>--}}
+        {{--                    </div>--}}
+        {{--                    <div>--}}
+        {{--                        <span class="heading">89</span>--}}
+        {{--                        <span class="description">Comments</span>--}}
+        {{--                    </div>--}}
+        {{--                </div>--}}
+        {{--            </div>--}}
+        {{--        </div>--}}
         <div class="text-center">
             <h5 class="h3">
-                Jessica Jones<span class="font-weight-light">, 27</span>
+                {{ $user->first_name }} {{ $user->last_name }}<span class="font-weight-light">, 27</span>
             </h5>
             <div class="h5 font-weight-300">
-                <i class="ni location_pin mr-2"></i>Bucharest, Romania
+                <i class="ni location_pin mr-2"></i>{{ $user->email }}
             </div>
             <div class="h5 mt-4">
-                <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
+                <i class="ni business_briefcase-24 mr-2"></i>{{ $user->city }} - {{ $user->country }}
             </div>
             <div>
-                <i class="ni education_hat mr-2"></i>University of Computer Science
+                <i class="ni education_hat mr-2"></i>{{ $user->address }}
             </div>
         </div>
     </div>
