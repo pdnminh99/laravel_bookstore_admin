@@ -46,20 +46,17 @@ class Book extends Model implements TabularRecord
         $this->in_stock = $in_stock;
         $this->price = $price;
     }
-//
-//    protected $fillable = [
-//        "title",
-//        "author",
-//        "description",
-//        "price"
-//    ];
+
+    protected $attributes = [
+        'title', 'author', 'publisher', 'year_of_publishing', 'pages', 'in_stock', 'price'
+    ];
 
     protected $casts = [
         "title" => "string",
         "author" => "string",
         "description" => "string",
         "price" => "integer",
-        "in_stock" => "string",
+        "in_stock" => "integer",
         "pages" => "integer",
         "year_of_publishing" => "integer"
     ];
