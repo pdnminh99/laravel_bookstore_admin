@@ -32,7 +32,7 @@
                     <x-table :records="$books"></x-table>
 
                     @slot('card_footer')
-                        <x-paginator :current="$page_number" :count="$pages" route="book"></x-paginator>
+                        <x-paginator :current="$page_number" :count="$pages" route="books"></x-paginator>
                     @endslot
                 </x-card>
             </div>

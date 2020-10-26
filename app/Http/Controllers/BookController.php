@@ -10,13 +10,13 @@ class BookController extends Controller
 {
     public function index(Request $request)
     {
-        $page_number = $request->query('page') ?? 1;
+        $paginator = Book::paginate(2);
 
         // Ref: https://hdtuto.com/article/how-to-get-current-user-details-in-laravel-57
         return view('pages.books', [
-            'books' => Book::paginate(10)->items(),
-            'page_number' => $page_number,
-            'pages' => 20,
+            'books' => $paginator->items(),
+            'page_number' => $paginator->currentPage(),
+            'pages' => $paginator->lastPage(),
             'username' => Auth::user()->name
         ]);
     }
