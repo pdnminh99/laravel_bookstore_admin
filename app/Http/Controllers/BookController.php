@@ -2,30 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\BookService;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    private BookService $service;
-
-    public function __construct(BookService $service)
+    public function index(Request $request)
     {
-        $this->service = $service;
+        $page_number = $request->query('page') ?? 1;
+        return view('pages.books', [
+            'books' => Book::paginate(10)->items(),
+            'page_number' => $page_number,
+            'pages' => 20,
+            'username' => 'Sherlock Holmes'
+        ]);
     }
 
-    public function getAll(Request $request): array
+    public function create()
     {
-        $name = $request->input('bid');
-        echo "<h1>Route is: $name</h1>\n";
-        return $this->service->getAll();
+        //
     }
 
-    public function get(Request $request, string $bid): ?Book
+    public function store(Request $request)
     {
-        $name = $request->input('bid');
-        echo "<h1>Route is: $name</h1>\n";
-        return $this->service->get($bid);
+        //
+    }
+
+    public function show($id)
+    {
+        //
+    }
+
+    public function edit($id)
+    {
+        //
+    }
+
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    public function destroy(string $id)
+    {
+        Book::find($id)->delete();
+        return redirect('books');
     }
 }

@@ -29,7 +29,7 @@ class ViewsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(BookService::class, DefaultBookService::class);
+        // Just For Fun :)
     }
 
     /**

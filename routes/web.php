@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Book;
 use App\Models\User;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,16 +37,7 @@ Route::middleware(['verified'])->group(function () {
         return view('pages.dashboard', ['username' => 'Sherlock Holmes']);
     });
 
-    Route::get('/book', function () {
-        $page_number = Request::query('page') ?? 1;
-
-        return view('pages.books', [
-            'books' => [],
-            'page_number' => $page_number,
-            'pages' => 20,
-            'username' => 'Sherlock Holmes'
-        ]);
-    });
+    Route::resource('books', 'App\Http\Controllers\BookController');
 
     Route::get('/order', function () {
         $page_number = Request::query('page') ?? 1;
