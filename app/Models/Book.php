@@ -8,49 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model implements TabularRecord
 {
-    public string $id;
-
-    public string $title;
-
-    public string $author;
-
-    public string $publisher;
-
-    public int $year_of_publishing;
-
-    public int $pages;
-
-    public int $price;
-
-    public int $in_stock;
-
-//    public static function new(string $title, string $author, string $publisher, int $price = 0)
-//    {
-//        return new Book('1', $title, $author, $publisher, 2000, 100, 100, $price);
-//    }
-
-//    public function __construct(
-//        string $id,
-//        string $title,
-//        string $author,
-//        string $publisher,
-//        int $year_of_publishing, int $pages,
-//        int $in_stock, int $price)
-//    {
-//        $this->id = $id;
-//        $this->title = $title;
-//        $this->author = $author;
-//        $this->publisher = $publisher;
-//        $this->year_of_publishing = $year_of_publishing;
-//        $this->pages = $pages;
-//        $this->in_stock = $in_stock;
-//        $this->price = $price;
-//    }
-
-    protected $attributes = [
-        'title', 'author', 'publisher', 'description', 'year_of_publishing', 'pages', 'in_stock', 'price'
-    ];
-
     protected $casts = [
         'title' => 'string',
         'author' => 'string',
@@ -62,19 +19,22 @@ class Book extends Model implements TabularRecord
         'year_of_publishing' => 'integer'
     ];
 
-
     public function get_fields()
     {
+        if ($this->in_stock > 40) $stock_status = 'in stock';
+        else if ($this->in_stock > 10) $stock_status = 'almost out of stock';
+        else $stock_status = 'out of stock';
+
         return [
             TabularField::parse_text($this->title),
             TabularField::parse_text($this->author),
             TabularField::parse_text($this->publisher),
-            TabularField::parse_status('in stock'),
-            TabularField::parse_text('999$'),
-            TabularField::new_actions_builder('book')
+            TabularField::parse_status($stock_status),
+            TabularField::parse_text($this->price),
+            TabularField::new_actions_builder('books')
                 ->add_action('details', '')
                 ->add_action('edit', '')
-                ->add_action_w_modal_confirm('delete', '', "Are you sure to delete $this->title")
+                ->add_action_w_modal_confirm('delete', "books/$this->book_id")
                 ->build()
         ];
     }
@@ -83,26 +43,4 @@ class Book extends Model implements TabularRecord
     {
         return ['title', 'author', 'publisher', 'status', 'price', ''];
     }
-
-//    public function getTitleAttribute($value)
-//    {
-//        return $value;
-//    }
-//
-//    public function setTitleAttribute(string $value)
-//    {
-//        return $this->attributes['title'] = $value;
-//    }
-//
-//    public function getYearOfPublishing(?int $value)
-//    {
-//        return $value;
-//    }
-//
-//    public function setYearOfPublishing(?int $value)
-//    {
-//        return $this->attributes['year_of_publishing'] = $value;
-//    }
-
-
 }
