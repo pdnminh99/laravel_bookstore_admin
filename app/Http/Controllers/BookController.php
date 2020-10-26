@@ -10,7 +10,7 @@ class BookController extends Controller
 {
     public function index(Request $request)
     {
-        $paginator = Book::paginate(2);
+        $paginator = Book::paginate(10);
 
         // Ref: https://hdtuto.com/article/how-to-get-current-user-details-in-laravel-57
         return view('pages.books', [

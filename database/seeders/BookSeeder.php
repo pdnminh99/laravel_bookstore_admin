@@ -7,6 +7,16 @@ use Illuminate\Support\Facades\DB;
 
 class BookSeeder extends Seeder
 {
+    function random_string($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
     /**
      * Run the database seeds.
      *
@@ -14,48 +24,17 @@ class BookSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('books')->insert([
-            'title' => 'Harry Potter and the Philosopher\'s Stone',
-            'author' => 'J.K ROWLING',
-            'publisher' => 'BLOOMSBURY CHILDRENS BOOKS',
-            'description' => '',
-            'price' => 999,
-            'in_stock' => 10,
-            'pages' => 200,
-            'year_of_publishing' => 2016
-        ]);
-
-        DB::table('books')->insert([
-            'title' => 'Harry Potter and the Philosopher\'s Stone',
-            'author' => 'J.K ROWLING',
-            'publisher' => 'BLOOMSBURY CHILDRENS BOOKS',
-            'description' => '',
-            'price' => 999,
-            'in_stock' => 10,
-            'pages' => 200,
-            'year_of_publishing' => 2016
-        ]);
-
-        DB::table('books')->insert([
-            'title' => 'Harry Potter and the Philosopher\'s Stone',
-            'author' => 'J.K ROWLING',
-            'publisher' => 'BLOOMSBURY CHILDRENS BOOKS',
-            'description' => '',
-            'price' => 999,
-            'in_stock' => 10,
-            'pages' => 200,
-            'year_of_publishing' => 2016
-        ]);
-
-        DB::table('books')->insert([
-            'title' => 'Harry Potter and the Philosopher\'s Stone',
-            'author' => 'J.K ROWLING',
-            'publisher' => 'BLOOMSBURY CHILDRENS BOOKS',
-            'description' => '',
-            'price' => 999,
-            'in_stock' => 10,
-            'pages' => 200,
-            'year_of_publishing' => 2016
-        ]);
+        for ($i = 0; $i < 100; $i++) {
+            DB::table('books')->insert([
+                'title' => $this->random_string(),
+                'author' => $this->random_string(),
+                'publisher' => $this->random_string(),
+                'description' => '',
+                'price' => rand(0, 9999),
+                'in_stock' => rand(0, 100),
+                'pages' => rand(0, 100),
+                'year_of_publishing' => rand(0, 2000)
+            ]);
+        }
     }
 }
