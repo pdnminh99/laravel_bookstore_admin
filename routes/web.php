@@ -42,10 +42,7 @@ Route::middleware(['verified'])->group(function () {
         $page_number = Request::query('page') ?? 1;
 
         return view('pages.books', [
-            'books' => [
-                Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express'),
-                Book::new('Harry Potter', 'J.K.Rowling', 'Hogward Express')
-            ],
+            'books' => [],
             'page_number' => $page_number,
             'pages' => 20,
             'username' => 'Sherlock Holmes'

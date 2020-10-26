@@ -24,46 +24,44 @@ class Book extends Model implements TabularRecord
 
     public int $in_stock;
 
-    public static function new(string $title, string $author, string $publisher, int $price = 0)
-    {
-        return new Book('1', $title, $author, $publisher, 2000, 100, 100, $price);
-    }
+//    public static function new(string $title, string $author, string $publisher, int $price = 0)
+//    {
+//        return new Book('1', $title, $author, $publisher, 2000, 100, 100, $price);
+//    }
 
-    public function __construct(
-        string $id,
-        string $title,
-        string $author,
-        string $publisher,
-        int $year_of_publishing, int $pages,
-        int $in_stock, int $price)
-    {
-        $this->id = $id;
-        $this->title = $title;
-        $this->author = $author;
-        $this->publisher = $publisher;
-        $this->year_of_publishing = $year_of_publishing;
-        $this->pages = $pages;
-        $this->in_stock = $in_stock;
-        $this->price = $price;
-    }
+//    public function __construct(
+//        string $id,
+//        string $title,
+//        string $author,
+//        string $publisher,
+//        int $year_of_publishing, int $pages,
+//        int $in_stock, int $price)
+//    {
+//        $this->id = $id;
+//        $this->title = $title;
+//        $this->author = $author;
+//        $this->publisher = $publisher;
+//        $this->year_of_publishing = $year_of_publishing;
+//        $this->pages = $pages;
+//        $this->in_stock = $in_stock;
+//        $this->price = $price;
+//    }
 
     protected $attributes = [
-        'title', 'author', 'publisher', 'year_of_publishing', 'pages', 'in_stock', 'price'
+        'title', 'author', 'publisher', 'description', 'year_of_publishing', 'pages', 'in_stock', 'price'
     ];
 
     protected $casts = [
-        "title" => "string",
-        "author" => "string",
-        "description" => "string",
-        "price" => "integer",
-        "in_stock" => "integer",
-        "pages" => "integer",
-        "year_of_publishing" => "integer"
+        'title' => 'string',
+        'author' => 'string',
+        'publisher' => 'string',
+        'description' => 'string',
+        'price' => 'integer',
+        'in_stock' => 'integer',
+        'pages' => 'integer',
+        'year_of_publishing' => 'integer'
     ];
 
-    const CREATED_AT = 'creation_date';
-
-    const UPDATED_AT = 'last_update';
 
     public function get_fields()
     {
@@ -86,25 +84,25 @@ class Book extends Model implements TabularRecord
         return ['title', 'author', 'publisher', 'status', 'price', ''];
     }
 
-    public function getTitleAttribute($value)
-    {
-        return $value;
-    }
-
-    public function setTitleAttribute(string $value)
-    {
-        return $this->attributes['title'] = $value;
-    }
-
-    public function getYearOfPublishing(?int $value)
-    {
-        return $value;
-    }
-
-    public function setYearOfPublishing(?int $value)
-    {
-        return $this->attributes['year_of_publishing'] = $value;
-    }
+//    public function getTitleAttribute($value)
+//    {
+//        return $value;
+//    }
+//
+//    public function setTitleAttribute(string $value)
+//    {
+//        return $this->attributes['title'] = $value;
+//    }
+//
+//    public function getYearOfPublishing(?int $value)
+//    {
+//        return $value;
+//    }
+//
+//    public function setYearOfPublishing(?int $value)
+//    {
+//        return $this->attributes['year_of_publishing'] = $value;
+//    }
 
 
 }
