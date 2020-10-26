@@ -46,19 +46,22 @@ class Book extends Model implements TabularRecord
         $this->in_stock = $in_stock;
         $this->price = $price;
     }
-
-    protected $fillable = [
-        "title",
-        "author",
-        "description",
-        "price"
-    ];
+//
+//    protected $fillable = [
+//        "title",
+//        "author",
+//        "description",
+//        "price"
+//    ];
 
     protected $casts = [
         "title" => "string",
         "author" => "string",
         "description" => "string",
-        "price" => "integer"
+        "price" => "integer",
+        "in_stock" => "string",
+        "pages" => "integer",
+        "year_of_publishing" => "integer"
     ];
 
     const CREATED_AT = 'creation_date';
@@ -85,4 +88,26 @@ class Book extends Model implements TabularRecord
     {
         return ['title', 'author', 'publisher', 'status', 'price', ''];
     }
+
+    public function getTitleAttribute($value)
+    {
+        return $value;
+    }
+
+    public function setTitleAttribute(string $value)
+    {
+        return $this->attributes['title'] = $value;
+    }
+
+    public function getYearOfPublishing(?int $value)
+    {
+        return $value;
+    }
+
+    public function setYearOfPublishing(?int $value)
+    {
+        return $this->attributes['year_of_publishing'] = $value;
+    }
+
+
 }
