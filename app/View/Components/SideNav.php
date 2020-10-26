@@ -23,7 +23,7 @@ class SideNav extends Component
             [
                 'text' => 'Books',
                 'icon' => 'ni-books text-orange',
-                'url' => 'book',
+                'url' => 'books',
                 'active' => Request::is('book')
             ],
             [

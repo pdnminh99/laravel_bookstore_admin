@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Fortify;
@@ -34,7 +34,7 @@ Fortify::verifyEmailView(function () {
 
 Route::middleware(['verified'])->group(function () {
     Route::get('/home', function () {
-        return view('pages.dashboard', ['username' => 'Sherlock Holmes']);
+        return view('pages.dashboard', ['username' => Auth::user()->name]);
     });
 
     Route::resource('books', 'App\Http\Controllers\BookController');
@@ -46,7 +46,7 @@ Route::middleware(['verified'])->group(function () {
             'orders' => [],
             'page_number' => $page_number,
             'pages' => 20,
-            'username' => 'Sherlock Holmes'
+            'username' => Auth::user()->name
         ]);
     });
 
@@ -57,21 +57,18 @@ Route::middleware(['verified'])->group(function () {
             'customers' => [],
             'page_number' => $page_number,
             'pages' => 20,
-            'username' => 'Sherlock Holmes'
+            'username' => Auth::user()->name
         ]);
     });
 
     Route::get('/profile', function () {
         return view('pages.profile', [
-            'user' => new User(
-                '123', 'teddybear123', 'teddy@gmail.com',
-                'Mr', 'Bean', '221B Baker Street',
-                'London', 'UK', 'private detective'),
-            'username' => 'Sherlock Holmes']);
+            'user' => Auth::user(),
+            'username' => Auth::user()->name]);
     });
 
     Route::get('/setting', function () {
-        return view('pages.settings', ['username' => 'Sherlock Holmes']);
+        return view('pages.settings', ['username' => Auth::user()->name]);
     });
 
 });

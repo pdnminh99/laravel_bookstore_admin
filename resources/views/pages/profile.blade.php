@@ -12,7 +12,7 @@
                     @endslot
 
                     @slot('card_sub_header')
-                        {{ $user->first_name }} {{ $user->last_name }}
+                        {{ $user->name }}
                     @endslot
 
                     @slot('card_body')
@@ -25,7 +25,7 @@
                                             <label class="form-control-label" for="input-username">Username</label>
                                             <input type="text" id="input-username" class="form-control"
                                                    placeholder="Username"
-                                                   value="{{ $user->user_name }}">
+                                                   value="{{ $user->name }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -43,7 +43,7 @@
                                             <label class="form-control-label" for="input-first-name">First name</label>
                                             <input type="text" id="input-first-name" class="form-control"
                                                    placeholder="First name"
-                                                   value="{{ $user->first_name }}">
+                                                   value="{{ $user->name }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -51,7 +51,7 @@
                                             <label class="form-control-label" for="input-last-name">Last name</label>
                                             <input type="text" id="input-last-name" class="form-control"
                                                    placeholder="Last name"
-                                                   value="{{ $user->last_name }}">
+                                                   value="{{ $user->name }}">
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-address">Address</label>
                                             <input id="input-address" class="form-control" placeholder="Home Address"
-                                                   value="{{ $user->address }}" type="text">
+                                                   value="{{ $user->address ?? '' }}" type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-city">City</label>
                                             <input type="text" id="input-city" class="form-control" placeholder="City"
-                                                   value="{{ $user->city }}">
+                                                   value="{{ $user->city ?? '' }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -82,7 +82,7 @@
                                             <label class="form-control-label" for="input-country">Country</label>
                                             <input type="text" id="input-country" class="form-control"
                                                    placeholder="Country"
-                                                   value="{{ $user->country }}">
+                                                   value="{{ $user->country ?? '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label">About Me</label>
                                     <textarea rows="4" class="form-control"
-                                              placeholder="A few words about you ...">{{ $user->about_me }}</textarea>
+                                              placeholder="A few words about you ...">{{ $user->about_me ?? '' }}</textarea>
                                 </div>
                             </div>
                         </form>
