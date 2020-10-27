@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    private AuthManager $authManager;
+
+    public function __construct(AuthManager $authManager)
+    {
+        $this->authManager = $authManager;
+    }
+
     public function index(Request $request)
     {
 //        if ($request->query('page') < 1) return redirect()->route('orders.index', ['page' => 1]);
@@ -20,7 +27,7 @@ class OrderController extends Controller
             'orders' => [],
             'page_number' => $page_number,
             'pages' => 1,
-            'username' => Auth::user()->name
+            'username' => $this->authManager->user()->name
         ]);
     }
 

@@ -3,11 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
+    private AuthManager $authManager;
+
+    public function __construct(AuthManager $authManager)
+    {
+        $this->authManager = $authManager;
+    }
+
     public function index(Request $request)
     {
         if ($request->query('page') < 1) return redirect()->route('books.index', ['page' => 1]);
@@ -19,7 +27,7 @@ class BookController extends Controller
             'books' => $paginator->items(),
             'page_number' => $paginator->currentPage(),
             'pages' => $paginator->lastPage(),
-            'username' => Auth::user()->name
+            'username' => $this->authManager->user()->name
         ]);
     }
 
