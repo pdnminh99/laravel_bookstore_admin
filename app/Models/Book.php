@@ -26,15 +26,14 @@ class Book extends Model implements TabularRecord
         else $stock_status = 'out of stock';
 
         return [
-            TabularField::parse_text($this->title),
+            TabularField::parse_text($this->title, null, "books/$this->id"),
             TabularField::parse_text($this->author),
             TabularField::parse_text($this->publisher),
             TabularField::parse_status($stock_status),
             TabularField::parse_text($this->price),
             TabularField::new_actions_builder('books')
-                ->add_action('details', '')
-                ->add_action('edit', '')
-                ->add_action_w_modal_confirm('delete', "books/$this->book_id")
+                ->add_action('details', "books/$this->id")
+                ->add_action_w_modal_confirm('delete', "books/$this->id")
                 ->build()
         ];
     }

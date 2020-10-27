@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $paginator = Book::paginate(10);
 
@@ -31,14 +31,9 @@ class BookController extends Controller
         //
     }
 
-    public function show($id)
+    public function show(string $id)
     {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
+        return view('pages.books-detail', ['id' => $id, 'username' => Auth::user()->name]);
     }
 
     public function update(Request $request, $id)
@@ -46,9 +41,12 @@ class BookController extends Controller
         //
     }
 
-    public function destroy(string $id)
+    public function destroy($id)
     {
         Book::find($id)->delete();
-        return redirect('books');
+        return redirect()
+            ->setStatusCode(200)
+            ->route('books.index', ['page' => 1])
+            ->with('message', "Book (id=$id) is deleted successfully");
     }
 }

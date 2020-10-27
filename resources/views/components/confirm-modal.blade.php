@@ -20,8 +20,9 @@
             </div>
             <div class="modal-body">Are you sure?</div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="onConfirmRoute()">Confirm</button>
+                <button class="btn btn-secondary" data-dismiss="modal" id="cancel-btn" type="button">Cancel</button>
+                <button class="btn btn-primary" id="confirm-btn" onclick="onConfirmRoute()" type="button">Confirm
+                </button>
             </div>
         </div>
     </div>

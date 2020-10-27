@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,7 @@ Route::middleware(['verified'])->group(function () {
         return view('pages.dashboard', ['username' => Auth::user()->name]);
     });
 
-    Route::resource('books', 'App\Http\Controllers\BookController');
+    Route::resource('books', BookController::class)->except(['edit']);
 
     Route::get('/order', function () {
         $page_number = Request::query('page') ?? 1;
