@@ -2,6 +2,8 @@
 
 namespace App\View\Models;
 
+use App\Models\StockStatus;
+
 abstract class TabularField
 {
     public string $type;
@@ -14,19 +16,24 @@ abstract class TabularField
         $this->type = $type;
     }
 
-    public static function parse(string $content, ?string $thumbnail = null, ?string $status = null, ?string $route = null): TabularTextField
-    {
-        // TODO implement this.
-    }
-
     public static function parse_text(string $content, ?string $thumbnail = null, ?string $route = null): TabularTextField
     {
         return new TabularTextField($content, $thumbnail, $route);
     }
 
-    public static function parse_status(string $content, string $status = 'success', ?string $route = null): TabularStatusField
+    public static function parse_status(string $status = StockStatus::IN_STOCK, ?string $route = null): TabularStatusField
     {
-        return new TabularStatusField($content, $status, $route);
+        switch ($status) {
+            case StockStatus::OUT_OF_STOCK:
+                $icon = 'danger';
+                break;
+            case StockStatus::IN_STOCK:
+            case StockStatus::ALMOST_OUT_OF_STOCK:
+            default:
+                $icon = 'success';
+                break;
+        }
+        return new TabularStatusField($status, $icon, $route);
     }
 
     public static function new_actions_builder(?string $route = null): TabularActionsBuilder

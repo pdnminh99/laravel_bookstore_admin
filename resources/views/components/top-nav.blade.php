@@ -1,7 +1,7 @@
 <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            @include('components.search-bar')
+            @include('components.search-bar', ['keyword' => $keyword])
             @include('components.top-nav-control')
             <x-user-control :username="$username"></x-user-control>
         </div>

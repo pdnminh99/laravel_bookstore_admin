@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Models\Book;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,31 @@ Fortify::verifyEmailView(function () {
 Route::middleware(['verified'])->group(function () {
     Route::get('/home', function () {
         return view('pages.dashboard', ['username' => Auth::user()->name]);
+    })->name('home');
+
+    Route::get('/search', function () {
+        $keyword = Request::query('keyword');
+        if (!isset($keyword) || $keyword == '') return redirect()->route('home');
+
+        // ref: https://stackoverflow.com/questions/37464060/laravel-search-database-table-for-partial-match-from-query
+        $books = Book::where([
+            ['title', 'like', "%$keyword%"]
+        ])->paginate(10);
+
+        return view('pages.search', [
+            'books' => [
+                'items' => $books->items(),
+                'pages' => $books->lastPage(),
+                'page_number' => $books->currentPage()
+            ],
+            'orders' => [
+                'items' => [],
+                'page_number' => 0,
+                'pages' => 0
+            ],
+            'username' => Auth::user()->name,
+            'keyword' => $keyword
+        ]);
     });
 
     Route::resource('books', BookController::class)->except(['edit']);

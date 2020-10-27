@@ -2,26 +2,14 @@
     @foreach($row->get_fields() as $field)
         @switch($field->type)
             @case(\App\View\Models\FieldType::TEXT)
-            @isset($field->thumbnail)
-                @if($loop->first)
-                    <th scope="row">
-                        @include('components.tabular.text-with-thumbnail-field', ['thumbnail' => $field->thumbnail, 'route' => $field->route, 'content' => $field->content])
-                    </th>
-                @else
-                    <td>
-                        @include('components.tabular.text-with-thumbnail-field', ['thumbnail' => $field->thumbnail, 'route' => $field->route, 'content' => $field->content])
-                    </td>
-                @endif
+            @if($loop->first)
+                <th scope="row">
+                    @include('components.tabular.text-with-thumbnail-field', ['thumbnail' => $field->thumbnail, 'route' => $field->route, 'content' => $field->content])
+                </th>
             @else
-                @if($loop->first)
-                    <th scope="row">
-                        {{ $field->content ?? '' }}
-                    </th>
-                @else
-                    <td>
-                        {{ $field->content ?? '' }}
-                    </td>
-                @endif
+                <td>
+                    @include('components.tabular.text-with-thumbnail-field', ['thumbnail' => $field->thumbnail, 'route' => $field->route, 'content' => $field->content])
+                </td>
             @endif
             @break
             @case(\App\View\Models\FieldType::STATUS)

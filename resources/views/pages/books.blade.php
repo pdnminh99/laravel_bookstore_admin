@@ -31,9 +31,11 @@
 
                     <x-table :records="$books"></x-table>
 
-                    @slot('card_footer')
-                        <x-paginator :current="$page_number" :count="$pages" route="books"></x-paginator>
-                    @endslot
+                    @if($pages > 1)
+                        @slot('card_footer')
+                            <x-paginator :current="$page_number" :count="$pages" route="books"></x-paginator>
+                        @endslot
+                    @endif
                 </x-card>
             </div>
         </div>

@@ -8,9 +8,12 @@ class TopNav extends Component
 {
     public ?string $username;
 
-    public function __construct(?string $username)
+    public string $keyword;
+
+    public function __construct(?string $username, string $keyword = '')
     {
         $this->username = $username;
+        $this->keyword = $keyword;
     }
 
     public function render()
