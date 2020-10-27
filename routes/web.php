@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\OrderController;
 use App\Models\Book;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
@@ -66,18 +67,9 @@ Route::middleware(['verified'])->group(function () {
 
     Route::resource('books', BookController::class)->except(['edit']);
 
-    Route::get('/order', function () {
-        $page_number = Request::query('page') ?? 1;
+    Route::resource('orders', OrderController::class);
 
-        return view('pages.orders', [
-            'orders' => [],
-            'page_number' => $page_number,
-            'pages' => 20,
-            'username' => Auth::user()->name
-        ]);
-    });
-
-    Route::get('/customer', function () {
+    Route::get('/users', function () {
         $page_number = Request::query('page') ?? 1;
 
         return view('pages.customers', [

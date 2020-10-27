@@ -2,7 +2,6 @@
 
 namespace App\View\Components;
 
-use Illuminate\Support\Facades\Request;
 use Illuminate\View\Component;
 
 class SideNav extends Component
@@ -27,12 +26,12 @@ class SideNav extends Component
             [
                 'text' => 'Orders',
                 'icon' => 'ni-credit-card text-primary',
-                'url' => 'order'
+                'url' => 'orders'
             ],
             [
-                'text' => 'Customers',
+                'text' => 'Users',
                 'icon' => 'ni-single-02 text-yellow',
-                'url' => 'customer'
+                'url' => 'users'
             ],
         ];
         $this->userNavigators = [
