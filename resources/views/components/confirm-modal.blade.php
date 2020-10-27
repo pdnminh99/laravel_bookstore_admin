@@ -4,8 +4,18 @@
     const confirmModalTitle = document.getElementById('confirm-modal-title')
     const confirmModalBody = document.getElementById('confirm-modal-body')
 
-    function registerConfirmRoute(confirmRoute) {
-        onConfirmRoute = () => window.location.href = confirmRoute
+    function registerConfirmRoute(confirmRoute, onSuccessRoute, method) {
+        onConfirmRoute = () => {
+            let confirmButton = document.getElementById('confirm-btn')
+            let cancelButton = document.getElementById('cancel-btn')
+
+            confirmButton.disabled = true
+            cancelButton.disabled = true
+            fetch(confirmRoute, {
+                headers: {'X-CSRF-TOKEN': '{!! csrf_token() !!}'},
+                method
+            }).finally(_ => window.location.href = onSuccessRoute)
+        }
     }
 </script>
 

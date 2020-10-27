@@ -8,9 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->query('page') < 1) return redirect()->route('books.index', ['page' => 1]);
         $paginator = Book::paginate(10);
+        if ($paginator->currentPage() > $paginator->lastPage()) return redirect()->route('books.index', ['page' => $paginator->lastPage()]);
 
         // Ref: https://hdtuto.com/article/how-to-get-current-user-details-in-laravel-57
         return view('pages.books', [
@@ -41,12 +43,8 @@ class BookController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(Book $book)
     {
-        Book::find($id)->delete();
-        return redirect()
-            ->setStatusCode(200)
-            ->route('books.index', ['page' => 1])
-            ->with('message', "Book (id=$id) is deleted successfully");
+        $book->delete();
     }
 }
