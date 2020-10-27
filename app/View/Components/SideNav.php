@@ -17,40 +17,34 @@ class SideNav extends Component
             [
                 'text' => 'Dashboard',
                 'icon' => 'ni-tv-2 text-primary',
-                'url' => '',
-                'active' => Request::is('/')
+                'url' => 'home'
             ],
             [
                 'text' => 'Books',
                 'icon' => 'ni-books text-orange',
-                'url' => 'books',
-                'active' => Request::is('book')
+                'url' => 'books'
             ],
             [
                 'text' => 'Orders',
                 'icon' => 'ni-credit-card text-primary',
-                'url' => 'order',
-                'active' => Request::is('order')
+                'url' => 'order'
             ],
             [
                 'text' => 'Customers',
                 'icon' => 'ni-single-02 text-yellow',
-                'url' => 'customer',
-                'active' => Request::is('customer')
+                'url' => 'customer'
             ],
         ];
         $this->userNavigators = [
             [
                 'text' => 'Profile',
                 'icon' => 'ni-single-02',
-                'url' => 'profile',
-                'active' => Request::is('profile')
+                'url' => 'profile'
             ],
             [
                 'text' => 'Settings',
                 'icon' => 'ni-ui-04',
-                'url' => 'setting',
-                'active' => Request::is('setting')
+                'url' => 'setting'
             ],
         ];
     }
