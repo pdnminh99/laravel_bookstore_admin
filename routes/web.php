@@ -71,4 +71,9 @@ Route::middleware(['verified'])->group(function () {
         return view('pages.settings', ['username' => Auth::user()->name]);
     });
 
+    Route::get('/logout', function () {
+        Auth::logout();
+        return redirect('/login');
+    });
+
 });
