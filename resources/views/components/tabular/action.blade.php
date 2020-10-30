@@ -13,7 +13,7 @@
                 <button class="dropdown-item"
                         data-toggle="modal"
                         data-target="#confirm-modal"
-                        onclick="registerConfirmRoute('{{ $action['route'] }}', 'books?page=1', 'DELETE')"
+                        onclick="registerConfirmRoute('{{ $action['route'] }}')"
                 >
                     {{ $action['name'] ?? '' }}
                 </button>
