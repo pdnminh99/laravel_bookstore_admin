@@ -15,7 +15,7 @@
                             :routes='[["title" => "Book", "active" => false, "url" => "/books?page=1"], ["title" => "$book->id", "active" => false]]'></x-breadcrumb>
                     @else
                         <x-breadcrumb
-                            :routes='[["title" => "Book", "active" => true]]'></x-breadcrumb>
+                            :routes='[["title" => "Book", "active" => false, "url" => "/books?page=1"], ["title" => "Create", "active" => true]]'></x-breadcrumb>
                     @endif
                 </div>
             </div>

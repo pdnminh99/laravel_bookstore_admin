@@ -5,7 +5,7 @@
 
     <div class="container-fluid mt--6">
         <div class="row">
-            <div class="col-xl-8 order-xl-1">
+            <div class="col-xl-12 order-xl-1">
                 <x-card :card_action="['route'=>'', 'name' => 'Save']">
                     @slot('card_header')
                         Edit profile
@@ -102,9 +102,9 @@
                 </x-card>
             </div>
 
-            <div class="col-xl-4 order-xl-2">
-                @include('components.profile.user-profile-card')
-            </div>
+            {{--            <div class="col-xl-4 order-xl-2">--}}
+            {{--                @include('components.profile.user-profile-card')--}}
+            {{--            </div>--}}
         </div>
     </div>
 @endsection
