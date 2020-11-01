@@ -19,7 +19,7 @@ class BookController extends Controller
     public function index(Request $request)
     {
         if ($request->query('page') < 1) return redirect()->route('books.index', ['page' => 1]);
-        $paginator = Book::paginate(10);
+        $paginator = Book::query()->orderBy('updated_at', 'DESC')->paginate(10);
         if ($paginator->currentPage() > $paginator->lastPage()) return redirect()->route('books.index', ['page' => $paginator->lastPage()]);
 
         // Ref: https://hdtuto.com/article/how-to-get-current-user-details-in-laravel-57
@@ -44,7 +44,23 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $current_year = date('Y');
+
+        $validated_book = $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'string|max:255',
+            'publisher' => 'string|max:255',
+            'description' => 'string',
+            'price' => 'required|integer|min:0',
+            'in_stock' => 'required|integer|min:0',
+            'pages' => 'required|integer|min:0',
+            'year_of_publishing' => "required|integer|between:0,$current_year"
+        ]);
+
+        Book::insert($validated_book);
+        return redirect()
+            ->route('books.index', ['page' => 1])
+            ->with('success', "Book title ${validated_book['title']} created successfully.");
     }
 
     public function show(string $id)
@@ -61,12 +77,26 @@ class BookController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $current_year = date('Y');
+
+        $validated_book = $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'string|max:255',
+            'publisher' => 'string|max:255',
+            'description' => '',
+            'price' => 'required|integer|min:0',
+            'in_stock' => 'required|integer|min:0',
+            'pages' => 'required|integer|min:0',
+            'year_of_publishing' => "required|integer|between:0,$current_year"
+        ]);
+
+        Book::where('id', $id)->update($validated_book);
+        return back()->with('success', 'Book info updated successfully');
     }
 
     public function destroy(Book $book)
     {
         $book->delete();
-        return back();
+        return back()->with('success', "Book with id $book->id is deleted successfully");
     }
 }

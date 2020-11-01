@@ -29,6 +29,17 @@
                         This table is for admins only
                     @endslot
 
+                    @if(session('success'))
+                        <div class="col-lg">
+                            <div class="alert alert-success" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    @endif
+
                     <x-table :records="$books"></x-table>
 
                     @if($pages > 1)
