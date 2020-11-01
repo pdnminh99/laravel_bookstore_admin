@@ -33,7 +33,13 @@ class BookController extends Controller
 
     public function create()
     {
-        //
+        return view('pages.books-detail',
+            [
+                'book' => new Book(),
+                'username' => Auth::user()->name,
+                'action' => "/books",
+                'method' => "POST"
+            ]);
     }
 
     public function store(Request $request)
@@ -43,7 +49,14 @@ class BookController extends Controller
 
     public function show(string $id)
     {
-        return view('pages.books-detail', ['id' => $id, 'username' => Auth::user()->name]);
+        $book = Book::find($id);
+        return view('pages.books-detail',
+            [
+                'book' => $book,
+                'username' => Auth::user()->name,
+                'action' => "/books/$id",
+                'method' => "PATCH"
+            ]);
     }
 
     public function update(Request $request, $id)

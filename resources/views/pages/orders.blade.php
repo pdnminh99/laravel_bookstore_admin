@@ -11,7 +11,7 @@
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <x-breadcrumb :routes="[['title' => 'Order', 'active' => true]]"></x-breadcrumb>
-                    @include('components.control')
+{{--                    @include('components.control')--}}
                 </div>
             </div>
         </div>

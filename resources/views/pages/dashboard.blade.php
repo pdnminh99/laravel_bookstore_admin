@@ -8,7 +8,7 @@
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     @include('containers.breadcrumb')
-                    @include('components.control')
+                    {{--                    @include('components.control')--}}
                 </div>
             </div>
         </div>
