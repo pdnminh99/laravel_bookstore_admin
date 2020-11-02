@@ -36,7 +36,7 @@ class BookController extends Controller
         return view('pages.books-detail',
             [
                 'book' => new Book(),
-                'username' => Auth::user()->name,
+                'username' => $this->authManager->user()->name,
                 'action' => "/books",
                 'method' => "POST"
             ]);
@@ -69,7 +69,7 @@ class BookController extends Controller
         return view('pages.books-detail',
             [
                 'book' => $book,
-                'username' => Auth::user()->name,
+                'username' => $this->authManager->user()->name,
                 'action' => "/books/$id",
                 'method' => "PATCH"
             ]);

@@ -24,6 +24,11 @@ class SideNav extends Component
                 'url' => 'books'
             ],
             [
+                'text' => 'Categories',
+                'icon' => 'ni-collection text-blue',
+                'url' => 'categories'
+            ],
+            [
                 'text' => 'Orders',
                 'icon' => 'ni-credit-card text-primary',
                 'url' => 'orders'

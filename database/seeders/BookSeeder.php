@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class BookSeeder extends Seeder
 {
-    function random_string($length = 10) {
+    function random_string($length = 10)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -36,5 +37,20 @@ class BookSeeder extends Seeder
                 'year_of_publishing' => rand(0, 2000)
             ]);
         }
+
+        DB::table('categories')->insert([
+            'name' => 'Sci-fi',
+            'description' => ''
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'News',
+            'description' => ''
+        ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Comics',
+            'description' => ''
+        ]);
     }
 }

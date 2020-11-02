@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
@@ -44,6 +45,8 @@ Route::middleware(['verified'])->group(function () {
 
     Route::resource('books', BookController::class)
         ->except(['edit']);
+
+    Route::resource('categories', CategoryController::class);
 
     Route::resource('orders', OrderController::class);
 
