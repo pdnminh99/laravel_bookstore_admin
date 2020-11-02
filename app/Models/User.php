@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\View\Models\TabularField;
 use App\View\Models\TabularRecord;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -39,16 +40,29 @@ class User extends Authenticatable implements TabularRecord, MustVerifyEmail
      * @var array
      */
     protected $casts = [
+        'name' => 'string',
+        'email' => 'string',
+        'phone' => 'string',
+        'city' => 'string',
         'email_verified_at' => 'datetime',
     ];
 
     public function get_fields()
     {
-        // TODO: Implement get_fields() method.
+        return [
+            TabularField::parse_text($this->name, null, "users/$this->id"),
+            TabularField::parse_text($this->email),
+            TabularField::parse_text($this->phone ?? '[empty]'),
+            TabularField::parse_text($this->city ?? '[empty]'),
+            TabularField::parse_text('admin'),
+            TabularField::new_actions_builder('users')
+                ->add_action('details', "users/$this->id")
+                ->build()
+        ];
     }
 
     public static function get_headers()
     {
-        // TODO: Implement get_headers() method.
+        return ['name', 'email', 'phone', 'city', 'role', ''];
     }
 }

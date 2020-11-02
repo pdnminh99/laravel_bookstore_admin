@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -19,7 +18,7 @@ class BookController extends Controller
     public function index(Request $request)
     {
         if ($request->query('page') < 1) return redirect()->route('books.index', ['page' => 1]);
-        $paginator = Book::query()->orderBy('updated_at', 'DESC')->paginate(10);
+        $paginator = Book::orderBy('updated_at', 'DESC')->paginate(10);
         if ($paginator->currentPage() > $paginator->lastPage()) return redirect()->route('books.index', ['page' => $paginator->lastPage()]);
 
         // Ref: https://hdtuto.com/article/how-to-get-current-user-details-in-laravel-57
@@ -54,6 +53,7 @@ class BookController extends Controller
             'price' => 'required|integer|min:0',
             'in_stock' => 'required|integer|min:0',
             'pages' => 'required|integer|min:0',
+            'category_id' => 'required|integer|min:0',
             'year_of_publishing' => "required|integer|between:0,$current_year"
         ]);
 
@@ -87,6 +87,7 @@ class BookController extends Controller
             'price' => 'required|integer|min:0',
             'in_stock' => 'required|integer|min:0',
             'pages' => 'required|integer|min:0',
+            'category_id' => 'required|integer|min:0',
             'year_of_publishing' => "required|integer|between:0,$current_year"
         ]);
 

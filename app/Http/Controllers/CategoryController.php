@@ -53,12 +53,20 @@ class CategoryController extends Controller
             ->with('success', "Category name ${validated_category['name']} created successfully.");
     }
 
-    public function show(string $id)
+    public function show(string $id, Request $request)
     {
+        if ($request->query('page') < 1) return redirect()->to("/categories/$id?page=1");
         $category = Category::find($id);
+        $paginator = $category->books()->paginate(10);
+        if ($paginator->currentPage() > $paginator->lastPage()) return redirect()->to("/categories/$id?page=>$paginator->lastPage()");
+
         return view('pages.categories-detail',
             [
                 'category' => $category,
+                'books' => $paginator->items(),
+                'page_number' => $paginator->currentPage(),
+                'pages' => $paginator->lastPage(),
+
                 'username' => $this->authManager->user()->name,
                 'action' => "/categories/$id",
                 'method' => "PATCH"

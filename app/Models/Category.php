@@ -8,22 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model implements TabularRecord
 {
+    public $table = 'categories';
+
     protected $casts = [
         'name' => 'string',
         'description' => 'string'
     ];
 
-//    public function books()
-//    {
-//
-//    }
+    public function books()
+    {
+        return $this->hasMany('App\Models\Book', 'category_id');
+    }
 
     public function get_fields()
     {
         return [
             TabularField::parse_text($this->id, null, "categories/$this->id"),
             TabularField::parse_text($this->name, null, "categories/$this->id"),
-            TabularField::parse_text("0"),
+            TabularField::parse_text(Category::books()->count()),
             TabularField::parse_text(substr($this->description ?? '', 0, 50)),
             TabularField::new_actions_builder('categories')
                 ->add_action('details', "categories/$this->id")

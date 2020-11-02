@@ -156,17 +156,14 @@
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-category-id">
+                                            <label class="form-control-label" for="exampleFormControlSelect1">
                                                 Category
                                             </label>
-                                            <select class="form-control"
-                                                    id="input-category-id"
-                                                    name="category_id">
+                                            <select class="form-control" id="exampleFormControlSelect1">
                                                 @foreach(\App\Models\Category::all() as $category)
-                                                    @if($category->id == $book->category->id)
+                                                    @if($loop->first)
                                                         <option
-                                                            value="{{ $category->id }}"
-                                                            selected>{{ $category->name }}</option>
+                                                            value="{{ $category->id }}">{{ $category->name }}</option>
                                                     @else
                                                         <option
                                                             value="{{ $category->id }}">{{ $category->name }}</option>

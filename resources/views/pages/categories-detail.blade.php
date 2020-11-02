@@ -34,6 +34,16 @@
                         This table is for admins only
                     @endslot
 
+                    @if($method == 'PATCH')
+                        <x-table :records="$books"></x-table>
+
+                        @if($pages > 1)
+                            @slot('card_footer')
+                                <x-paginator :current="$page_number" :count="$pages" route="/categories"></x-paginator>
+                            @endslot
+                        @endif
+                    @endif
+
                     @slot('card_body')
                         <form action="{{ $action }}" method="POST">
                             @csrf

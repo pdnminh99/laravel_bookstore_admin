@@ -23,6 +23,11 @@ class CreateBooksTable extends Migration
             $table->integer('price')->nullable();
             $table->integer('pages')->nullable();
             $table->integer('in_stock')->default(0)->nullable(false);
+            $table->foreignId('category_id')
+                ->nullable()
+                ->constrained('categories')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
             $table->timestamps();
         });
     }
