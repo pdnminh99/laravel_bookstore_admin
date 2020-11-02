@@ -1,6 +1,7 @@
 <?php
 
 use App\Providers\FortifyServiceProvider;
+use Spatie\Permission\PermissionServiceProvider;
 
 return [
 
@@ -177,6 +178,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         FortifyServiceProvider::class,
+        PermissionServiceProvider::class,
 
         // My custom providers
         App\Providers\ViewsServiceProvider::class
