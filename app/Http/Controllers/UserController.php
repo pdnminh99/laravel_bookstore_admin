@@ -38,8 +38,7 @@ class UserController extends Controller
             [
                 'user' => $user,
                 'username' => $this->authManager->user()->name,
-                'action' => "/users/$id",
-                'method' => "PATCH"
+                'action' => "/users/$id"
             ]);
     }
 

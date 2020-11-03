@@ -29,7 +29,16 @@
                         This table is for admins only
                     @endslot
 
-                    <x-table :records="$users"></x-table>
+                    @if (count($users) == 0)
+                        @slot('card_body')
+                            <div class="text-center">
+                                <img class="rounded" src="{{ asset('/img/icons/nothing-here.png') }}"
+                                     alt="empty-data">
+                            </div>
+                        @endslot
+                    @else
+                        <x-table :records="$users"></x-table>
+                    @endif
 
                     @if($pages > 1)
                         @slot('card_footer')

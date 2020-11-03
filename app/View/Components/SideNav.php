@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use Illuminate\Auth\AuthManager;
 use Illuminate\View\Component;
 
 class SideNav extends Component
@@ -10,8 +11,11 @@ class SideNav extends Component
 
     public array $userNavigators;
 
-    public function __construct()
+    private AuthManager $auth_manager;
+
+    public function __construct(AuthManager $auth_manager)
     {
+        $this->auth_manager = $auth_manager;
         $this->navigators = [
             [
                 'text' => 'Dashboard',
@@ -39,11 +43,14 @@ class SideNav extends Component
                 'url' => 'users'
             ],
         ];
+
+        $id = $this->auth_manager->user()->id;
+
         $this->userNavigators = [
             [
                 'text' => 'Profile',
                 'icon' => 'ni-single-02',
-                'url' => 'profile'
+                'url' => "users/$id"
             ],
             [
                 'text' => 'Settings',

@@ -161,9 +161,11 @@
                                             </label>
                                             <select class="form-control"
                                                     id="input-category-id"
-                                                    name="category_id">
+                                                    name="category_id"
+                                                {{ count(\App\Models\Category::all()) == 0 ? 'disabled' : '' }}
+                                            >
                                                 @foreach(\App\Models\Category::all() as $category)
-                                                    @if($category->id == $book->category->id)
+                                                    @if(isset($book->$category) && $category->id == $book->category->id)
                                                         <option
                                                             value="{{ $category->id }}"
                                                             selected>{{ $category->name }}</option>

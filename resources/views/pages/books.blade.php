@@ -40,7 +40,16 @@
                         </div>
                     @endif
 
-                    <x-table :records="$books"></x-table>
+                    @if (count($books) == 0)
+                        @slot('card_body')
+                            <div class="text-center">
+                                <img class="rounded" src="{{ asset('/img/icons/nothing-here.png') }}"
+                                     alt="empty-data">
+                            </div>
+                        @endslot
+                    @else
+                        <x-table :records="$books"></x-table>
+                    @endif
 
                     @if($pages > 1)
                         @slot('card_footer')

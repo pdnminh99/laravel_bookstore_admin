@@ -44,7 +44,7 @@ class CategoryController extends Controller
     {
         $validated_category = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'string'
+            'description' => ''
         ]);
 
         Category::insert($validated_category);

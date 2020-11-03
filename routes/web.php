@@ -53,12 +53,6 @@ Route::middleware(['verified'])->group(function () {
     Route::resource('users', UserController::class)
         ->only(['index', 'show', 'update']);
 
-    Route::get('/profile', function () {
-        return view('pages.profile', [
-            'user' => Auth::user(),
-            'username' => Auth::user()->name]);
-    });
-
     Route::get('/setting', function () {
         return view('pages.settings', ['username' => Auth::user()->name]);
     });

@@ -10,13 +10,8 @@
         <div class="container-fluid">
             <div class="header-body">
                 <div class="row align-items-center py-4">
-                    @if($method == 'PATCH')
-                        <x-breadcrumb
-                            :routes='[["title" => "Book", "active" => false, "url" => "/books?page=1"], ["title" => "$book->id", "active" => false]]'></x-breadcrumb>
-                    @else
-                        <x-breadcrumb
-                            :routes='[["title" => "Book", "active" => false, "url" => "/books?page=1"], ["title" => "Create", "active" => true]]'></x-breadcrumb>
-                    @endif
+                    <x-breadcrumb
+                        :routes='[["title" => "User", "active" => false, "url" => "/users?page=1"], ["title" => "$user->id", "active" => false]]'></x-breadcrumb>
                 </div>
             </div>
         </div>
@@ -27,7 +22,7 @@
             <div class="col">
                 <x-card>
                     @slot('card_header')
-                        {{ $method == 'PATCH' ? "Book id $book->id" : "Create book" }}
+                        User id {{ $user->id }}
                     @endslot
 
                     @slot('card_sub_header')
@@ -37,7 +32,7 @@
                     @slot('card_body')
                         <form action="{{ $action }}" method="POST">
                             @csrf
-                            @method($method)
+                            @method('PATCH')
 
                             @if(session('success'))
                                 <div class="alert alert-success" role="alert">
@@ -48,7 +43,7 @@
                                 </div>
                             @endif
 
-                            @error('title')
+                            @error('name')
                             <div class="alert alert-danger" role="alert">
                                 {{ $message }}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -57,7 +52,7 @@
                             </div>
                             @enderror
 
-                            @error('author')
+                            @error('address')
                             <div class="alert alert-danger" role="alert">
                                 {{ $message }}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -66,7 +61,7 @@
                             </div>
                             @enderror
 
-                            @error('publisher')
+                            @error('phone')
                             <div class="alert alert-danger" role="alert">
                                 {{ $message }}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -75,7 +70,7 @@
                             </div>
                             @enderror
 
-                            @error('year_of_publishing')
+                            @error('country')
                             <div class="alert alert-danger" role="alert">
                                 {{ $message }}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -84,7 +79,7 @@
                             </div>
                             @enderror
 
-                            @error('description')
+                            @error('city')
                             <div class="alert alert-danger" role="alert">
                                 {{ $message }}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -93,180 +88,113 @@
                             </div>
                             @enderror
 
-                            <h6 class="heading-small text-muted mb-4">Thumbnails</h6>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                        </div>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="inputGroupFile01"
-                                                   aria-describedby="inputGroupFileAddon01">
-                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            @error('about_me')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @enderror
+
+                            <h6 class="heading-small text-muted mb-4">User information</h6>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-username">Username</label>
+                                            <input type="text"
+                                                   id="input-username"
+                                                   name="name"
+                                                   class="form-control @error('name') is-invalid @enderror"
+                                                   placeholder="Username"
+                                                   value="{{ $user->name }}">
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="col-lg-6">
-
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-email">Email address</label>
+                                            <input type="email"
+                                                   id="input-email"
+                                                   disabled
+                                                   class="form-control @error('email') is-invalid @enderror"
+                                                   placeholder="email input here..."
+                                                   value="{{ $user->email }}">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <hr class="my-4"/>
-
-                            <h6 class="heading-small text-muted mb-4">Basic information</h6>
+                            <!-- Address -->
+                            <h6 class="heading-small text-muted mb-4">Contact information</h6>
                             <div class="pl-lg-4">
-                                {{--  Add images upload here  --}}
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-title">Title</label>
-                                            <input class="form-control @error('title') is-invalid @enderror"
-                                                   id="input-title"
-                                                   name="title"
-                                                   placeholder="Title"
-                                                   type="text"
-                                                   value="{{ $book->title ?? '' }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-author">Author</label>
-                                            <input id="input-author"
-                                                   type="text"
-                                                   name="author"
-                                                   class="form-control @error('author') is-invalid @enderror"
-                                                   placeholder="Author"
-                                                   value="{{ $book->author ?? '' }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-publisher">Publisher</label>
-                                            <input id="input-publisher"
-                                                   type="text"
-                                                   name="publisher"
-                                                   class="form-control @error('publisher') is-invalid @enderror"
-                                                   placeholder="Publisher"
-                                                   value="{{ $book->publisher ?? '' }}">
+                                            <label class="form-control-label" for="input-address">Address</label>
+                                            <input id="input-address"
+                                                   class="form-control @error('address') is-invalid @enderror"
+                                                   name="address"
+                                                   placeholder="Home Address"
+                                                   value="{{ $user->address ?? '' }}" type="text">
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="exampleFormControlSelect1">
-                                                Category
-                                            </label>
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                @foreach(\App\Models\Category::all() as $category)
-                                                    @if($loop->first)
-                                                        <option
-                                                            value="{{ $category->id }}">{{ $category->name }}</option>
-                                                    @else
-                                                        <option
-                                                            value="{{ $category->id }}">{{ $category->name }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
+                                            <label class="form-control-label" for="input-address">Phone number</label>
+                                            <input id="input-address"
+                                                   class="form-control @error('phone') is-invalid @enderror"
+                                                   name="phone"
+                                                   placeholder="Phone Number"
+                                                   value="{{ $user->phone ?? '' }}" type="tel">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-pages">
-                                                Pages
-                                            </label>
-                                            <input type="number"
-                                                   id="input-pages"
-                                                   name="pages"
-                                                   min="0"
-                                                   required
-                                                   class="form-control @error('pages') is-invalid @enderror"
-                                                   placeholder="Pages counts"
-                                                   value="{{ $book->pages ?? 0 }}">
+                                            <label class="form-control-label" for="input-city">City</label>
+                                            <input type="text"
+                                                   id="input-city"
+                                                   name="city"
+                                                   class="form-control @error('city') is-invalid @enderror"
+                                                   placeholder="City"
+                                                   value="{{ $user->city ?? '' }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="input-year-of-publishing">
-                                                Year of publishing
-                                            </label>
-                                            <input type="number"
-                                                   id="input-year-of-publishing"
-                                                   name="year_of_publishing"
-                                                   class="form-control @error('year_of_publishing') is-invalid @enderror"
-                                                   min="0"
-                                                   required
-                                                   max="{{ date('Y') }}"
-                                                   placeholder="Year Of Publishing"
-                                                   value="{{ $book->year_of_publishing ?? date('Y') }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-price">
-                                                Price
-                                            </label>
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">$</span>
-                                                </div>
-                                                <input type="number"
-                                                       id="input-price"
-                                                       name="price"
-                                                       required
-                                                       class="form-control @error('price') is-invalid @enderror"
-                                                       placeholder="Price"
-                                                       min="0"
-                                                       value="{{ $book->price ?? 0 }}">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-stock">
-                                                Stock counts
-                                            </label>
-                                            <input type="number"
-                                                   id="input-stock"
-                                                   name="in_stock"
-                                                   required
-                                                   min="0"
-                                                   class="form-control @error('in_stock') is-invalid @enderror"
-                                                   placeholder="Stock Counts"
-                                                   value="{{ $book->in_stock ?? 0 }}">
+                                            <label class="form-control-label" for="input-country">Country</label>
+                                            <input type="text"
+                                                   id="input-country"
+                                                   class="form-control @error('country') is-invalid @enderror"
+                                                   name="country"
+                                                   placeholder="Country"
+                                                   value="{{ $user->country ?? '' }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <hr class="my-4"/>
                             <!-- Description -->
-                            <h6 class="heading-small text-muted mb-4">Description</h6>
+                            <h6 class="heading-small text-muted mb-4">About me</h6>
                             <div class="pl-lg-4">
                                 <div class="form-group">
-                                    <label for="input-description" class="form-control-label">Description</label>
-                                    <textarea id="input-description"
-                                              rows="4"
-                                              class="form-control @error('description') is-invalid @enderror"
-                                              name="description"
-                                              placeholder="A few words about the book ..."
-                                    >{{ $book->description ?? '' }}</textarea>
+                                    <label for="input-about-me" class="form-control-label">About Me</label>
+                                    <textarea
+                                        rows="4"
+                                        id="input-about-me"
+                                        name="about_me"
+                                        class="form-control @error('about_me') is-invalid @enderror"
+                                        placeholder="A few words about you ..."
+                                    >
+                                        {{ $user->about_me ?? '' }}
+                                    </textarea>
                                 </div>
 
                                 <div class="text-left">
-                                    <button type="submit"
-                                            class="btn btn-primary mt-4"
-                                    >
-                                        {{ $method == 'PATCH' ? 'Save changes' : 'Create' }}
-                                    </button>
+                                    <button type="submit" class="btn btn-primary mt-4">Save changes</button>
                                 </div>
                             </div>
                         </form>
