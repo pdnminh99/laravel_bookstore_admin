@@ -18,7 +18,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         if ($request->query('page') < 1) return redirect()->route('orders.index', ['page' => 1]);
-        $paginator = Order::orderBy('updated_at', 'DESC')->paginate(10);
+        $paginator = Order::orderBy('id')->paginate(10);
         if ($paginator->currentPage() > $paginator->lastPage()) return redirect()->route('order.index', ['page' => $paginator->lastPage()]);
 
         return view('pages.orders', [
@@ -48,11 +48,23 @@ class OrderController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $validated_order = $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'customer_phone' => 'required|string|max:255',
+            'customer_address' => 'required|string|max:255',
+            'customer_country' => '',
+            'customer_city' => '',
+            'note' => '',
+            'status' => 'required|string'
+        ]);
+
+        Order::where('id', $id)->update($validated_order);
+        return back()->with('success', 'Order info updated successfully');
     }
 
     public function destroy(Order $order)
     {
         $order->delete();
+        return back()->with('success', "Order with id $order->id is deleted successfully");
     }
 }

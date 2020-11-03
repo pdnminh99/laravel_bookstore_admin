@@ -18,7 +18,7 @@ class BookController extends Controller
     public function index(Request $request)
     {
         if ($request->query('page') < 1) return redirect()->route('books.index', ['page' => 1]);
-        $paginator = Book::orderBy('updated_at', 'DESC')->paginate(10);
+        $paginator = Book::orderBy('id')->paginate(10);
         if ($paginator->currentPage() > $paginator->lastPage()) return redirect()->route('books.index', ['page' => $paginator->lastPage()]);
 
         // Ref: https://hdtuto.com/article/how-to-get-current-user-details-in-laravel-57

@@ -15,7 +15,6 @@ class Order extends Model implements TabularRecord
         'customer_name' => 'string',
         'customer_phone' => 'string',
         'customer_address' => 'string',
-        'customer_email' => 'string',
         'customer_country' => 'string',
         'customer_city' => 'string',
         'note' => 'string',
@@ -54,11 +53,12 @@ class Order extends Model implements TabularRecord
         return [
             TabularField::parse_text($this->id, null, "/orders/$this->id"),
             TabularField::parse_text($this->customer_name),
-            TabularField::parse_text($this->customer_email),
-            TabularField::parse_text($this->status),
+            TabularField::parse_text($this->customer->email),
+            TabularField::parse_status($this->status),
             TabularField::parse_text("$total_bill$"),
             TabularField::new_actions_builder('orders')
                 ->add_action('details', "/orders/$this->id")
+                ->add_action_w_modal_confirm('delete', "/orders/$this->id")
                 ->build()
         ];
     }

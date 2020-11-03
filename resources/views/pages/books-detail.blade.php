@@ -116,7 +116,6 @@
 
                             <h6 class="heading-small text-muted mb-4">Basic information</h6>
                             <div class="pl-lg-4">
-                                {{--  Add images upload here  --}}
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">

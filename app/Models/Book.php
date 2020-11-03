@@ -41,6 +41,7 @@ class Book extends Model implements TabularRecord
         $price = number_format($this->price);
 
         return [
+            TabularField::parse_text($this->id, null, "/books/$this->id"),
             TabularField::parse_text($this->title, null, "/books/$this->id"),
             TabularField::parse_text($this->author),
             TabularField::parse_text($this->category->name),
@@ -55,6 +56,6 @@ class Book extends Model implements TabularRecord
 
     public static function get_headers()
     {
-        return ['title', 'author', 'category', 'status', 'price', ''];
+        return ['id', 'title', 'author', 'category', 'status', 'price', ''];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\View\Models;
 
+use App\Models\OrderStatus;
 use App\Models\StockStatus;
 
 abstract class TabularField
@@ -25,10 +26,18 @@ abstract class TabularField
     {
         switch ($status) {
             case StockStatus::OUT_OF_STOCK:
+            case OrderStatus::CANCELLED:
                 $icon = 'danger';
                 break;
-            case StockStatus::IN_STOCK:
             case StockStatus::ALMOST_OUT_OF_STOCK:
+            case OrderStatus::DELIVERING:
+                $icon = 'warning';
+                break;
+            case OrderStatus::PENDING:
+                $icon = 'primary';
+                break;
+            case OrderStatus::DELIVERED:
+            case StockStatus::IN_STOCK:
             default:
                 $icon = 'success';
                 break;

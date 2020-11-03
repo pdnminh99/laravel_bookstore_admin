@@ -13,7 +13,6 @@ class CreateOrdersTable extends Migration
             $table->string('customer_name')->default('');
             $table->string('customer_phone')->default('');
             $table->string('customer_address')->default('');
-            $table->string('customer_email')->default('');
             $table->string('customer_country')->default('');
             $table->string('customer_city')->default('');
             $table->string('note')->default('');
