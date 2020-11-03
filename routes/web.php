@@ -48,7 +48,8 @@ Route::middleware(['verified'])->group(function () {
 
     Route::resource('categories', CategoryController::class);
 
-    Route::resource('orders', OrderController::class);
+    Route::resource('orders', OrderController::class)
+        ->only(['index', 'show', 'update', 'destroy']);
 
     Route::resource('users', UserController::class)
         ->only(['index', 'show', 'update']);

@@ -47,6 +47,11 @@ class User extends Authenticatable implements TabularRecord, MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function books()
+    {
+        return $this->hasMany('App\Models\Book');
+    }
+
     public function get_fields()
     {
         return [

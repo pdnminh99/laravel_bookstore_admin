@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateBooksTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('books', function (Blueprint $table) {
@@ -23,6 +18,11 @@ class CreateBooksTable extends Migration
             $table->integer('price')->nullable();
             $table->integer('pages')->nullable();
             $table->integer('in_stock')->default(0)->nullable(false);
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
             $table->foreignId('category_id')
                 ->nullable()
                 ->constrained('categories')
@@ -32,11 +32,6 @@ class CreateBooksTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('books');

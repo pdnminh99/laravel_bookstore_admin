@@ -11,7 +11,7 @@
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <x-breadcrumb :routes="[['title' => 'Order', 'active' => true]]"></x-breadcrumb>
-{{--                    @include('components.control')--}}
+                    {{--                    @include('components.control')--}}
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
                     <x-table :records="$orders"></x-table>
 
                     @slot('card_footer')
-                        <x-paginator :current="$page_number" :count="$pages" route="order"></x-paginator>
+                        <x-paginator :current="$page_number" :count="$pages" route="orders"></x-paginator>
                     @endslot
                 </x-card>
             </div>

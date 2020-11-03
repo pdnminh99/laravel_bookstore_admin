@@ -4,10 +4,13 @@ namespace App\Models;
 
 use App\View\Models\TabularField;
 use App\View\Models\TabularRecord;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model implements TabularRecord
 {
+    use HasFactory;
+
     public $table = 'categories';
 
     protected $casts = [
