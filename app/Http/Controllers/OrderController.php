@@ -18,7 +18,22 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         if ($request->query('page') < 1) return redirect()->route('orders.index', ['page' => 1]);
-        $paginator = Order::orderBy('id')->paginate(10);
+        $filters = $request->session()->get('filters');
+
+        $status = $filters['status'] ?? 'NONE';
+        $creation_date = $filters['creation_date'] ?? 'ASC';
+        $from = $filters['from'] ?? date('Y-m-d', 0);
+        $to = $filters['to'] ?? date('Y-m-d');
+
+        $paginator = ($status != 'NONE') ?
+            Order::where('status', '=', $status)->orderBy('created_at', $creation_date) :
+            Order::orderBy('created_at', $creation_date);
+
+        $paginator = $paginator
+            ->whereDate('created_at', '>=', $from)
+            ->whereDate('created_at', '<=', $to)
+            ->paginate(10);
+
         if ($paginator->currentPage() > $paginator->lastPage()) return redirect()->route('order.index', ['page' => $paginator->lastPage()]);
 
         return view('pages.orders', [

@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Fortify;
@@ -47,6 +48,44 @@ Route::middleware(['verified'])->group(function () {
         ->except(['edit']);
 
     Route::resource('categories', CategoryController::class);
+
+    Route::get('orders/filter', function (Illuminate\Http\Request $request) {
+        $filters = $request->session()->get('filters');
+
+        if (!isset($filters['creation_date'])) {
+            $filters['creation_date'] = 'ASC';
+        }
+        if (!isset($filters['status'])) {
+            $filters['status'] = 'NONE';
+        }
+        if (!isset($filters['from'])) {
+            $filters['from'] = date('Y-m-d', 0);
+        }
+        if (!isset($filters['to'])) {
+            $filters['to'] = date('Y-m-d');
+        }
+
+        return view('pages.orders-filter', [
+            'filters' => $filters,
+            'username' => Auth::user()->name
+        ]);
+    });
+
+    Route::post('orders/filter', function (Request $request) {
+        $earliest_date = date('Y-m-d', 0);
+        $today = date('Y-m-d');
+        $from = $request->input('from');
+        $to = $request->input('to');
+
+        $filters = $request->validate([
+            'from' => "required|date_format:Y-m-d|before_or_equal:$to|after_or_equal:$earliest_date",
+            'to' => "required|date_format:Y-m-d|before_or_equal:$today|after_or_equal:$from",
+            'status' => 'required|string',
+            'creation_date' => 'required|string'
+        ]);
+        session(['filters' => $filters]);
+        return redirect()->to('/orders?page=1');
+    });
 
     Route::resource('orders', OrderController::class)
         ->only(['index', 'show', 'update', 'destroy']);
