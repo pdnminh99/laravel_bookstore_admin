@@ -33,14 +33,13 @@ class UserController extends Controller
         ]);
     }
 
-    public function show(string $id)
+    public function show(User $user)
     {
-        $user = User::find($id);
         return view('pages.users-detail',
             [
                 'user' => $user,
                 'username' => $this->authManager->user()->name,
-                'action' => "/users/$id"
+                'action' => "/users/$user->id"
             ]);
     }
 
@@ -49,14 +48,19 @@ class UserController extends Controller
         $validated_user_info = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'string|max:255',
-            'description' => '',
             'role' => 'required|string',
             'phone' => 'required|string',
             'city' => 'required|string',
             'country' => 'required|string',
             'about_me' => ''
         ]);
-        $user->update($validated_user_info);
+        $user->name = $validated_user_info['name'];
+        $user->address = $validated_user_info['address'];
+        $user->phone = $validated_user_info['phone'];
+        $user->city = $validated_user_info['city'];
+        $user->country = $validated_user_info['country'];
+        $user->about_me = $validated_user_info['about_me'] ?? '';
+        $user->save();
 
         $current_role = $user->getRoleNames()[0];
         $new_role = $validated_user_info['role'];

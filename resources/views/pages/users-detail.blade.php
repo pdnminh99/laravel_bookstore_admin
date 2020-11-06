@@ -134,7 +134,7 @@
                                             <select class="form-control"
                                                     id="input-role"
                                                     name="role"
-                                                    {{ \Illuminate\Support\Facades\Auth::id() == $user->id ? 'disabled' : '' }}
+                                                {{ \Illuminate\Support\Facades\Auth::id() == $user->id ? 'disabled' : '' }}
                                             >
                                                 <option value="editor"
                                                     {{ $user->getRoleNames()[0] == \App\Models\AccessRole::EDITOR ? 'selected' : '' }}>
@@ -162,7 +162,7 @@
                                                    class="form-control @error('address') is-invalid @enderror"
                                                    name="address"
                                                    placeholder="Home Address"
-                                                   value="{{ $user->address ?? '' }}" type="text">
+                                                   value="{{ $user->address }}" type="text">
                                         </div>
                                     </div>
 
@@ -173,7 +173,7 @@
                                                    class="form-control @error('phone') is-invalid @enderror"
                                                    name="phone"
                                                    placeholder="Phone Number"
-                                                   value="{{ $user->phone ?? '' }}" type="tel">
+                                                   value="{{ $user->phone }}" type="tel">
                                         </div>
                                     </div>
                                 </div>

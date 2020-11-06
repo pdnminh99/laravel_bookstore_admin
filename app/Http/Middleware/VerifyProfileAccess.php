@@ -18,7 +18,7 @@ class VerifyProfileAccess
 
     public function handle(Request $request, \Closure $next)
     {
-        $requested_user = User::find($request->route('user'));
+        $requested_user = $request->route('user');
         $current_user = $this->auth_manager->user();
 
         if (is_null($requested_user)) return
