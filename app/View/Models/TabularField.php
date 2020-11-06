@@ -2,6 +2,7 @@
 
 namespace App\View\Models;
 
+use App\Models\AccessRole;
 use App\Models\OrderStatus;
 use App\Models\StockStatus;
 
@@ -26,6 +27,7 @@ abstract class TabularField
     {
         switch ($status) {
             case StockStatus::OUT_OF_STOCK:
+            case AccessRole::ADMIN:
             case OrderStatus::CANCELLED:
                 $icon = 'danger';
                 break;
@@ -34,6 +36,7 @@ abstract class TabularField
                 $icon = 'warning';
                 break;
             case OrderStatus::PENDING:
+            case AccessRole::EDITOR:
                 $icon = 'primary';
                 break;
             case OrderStatus::DELIVERED:

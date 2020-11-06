@@ -37,12 +37,14 @@ class SideNav extends Component
                 'icon' => 'ni-credit-card text-primary',
                 'url' => 'orders'
             ],
-            [
+        ];
+
+        if ($this->auth_manager->user()->hasPermissionTo('view profiles'))
+            array_push($this->navigators, [
                 'text' => 'Users',
                 'icon' => 'ni-single-02 text-yellow',
                 'url' => 'users'
-            ],
-        ];
+            ]);
 
         $id = $this->auth_manager->user()->id;
 

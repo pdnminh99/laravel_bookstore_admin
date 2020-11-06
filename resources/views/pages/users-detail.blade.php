@@ -22,11 +22,11 @@
             <div class="col">
                 <x-card>
                     @slot('card_header')
-                        User id {{ $user->id }}
+                        {{ $user->getRoleNames()[0] ?? 'unknown role' }}
                     @endslot
 
                     @slot('card_sub_header')
-                        This table is for admins only
+                        {{ $user->name }}
                     @endslot
 
                     @slot('card_body')
@@ -122,6 +122,32 @@
                                                    value="{{ $user->email }}">
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-role">
+                                                Role
+                                            </label>
+                                            <select class="form-control"
+                                                    id="input-role"
+                                                    name="role"
+                                                    {{ \Illuminate\Support\Facades\Auth::id() == $user->id ? 'disabled' : '' }}
+                                            >
+                                                <option value="editor"
+                                                    {{ $user->getRoleNames()[0] == \App\Models\AccessRole::EDITOR ? 'selected' : '' }}>
+                                                    Editor
+                                                </option>
+                                                <option
+                                                    value="admin" {{ $user->getRoleNames()[0] == \App\Models\AccessRole::ADMIN ? 'selected' : '' }}>
+                                                    Admin
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                             <hr class="my-4"/>

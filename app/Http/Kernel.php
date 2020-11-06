@@ -8,7 +8,9 @@ use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
+use App\Http\Middleware\VerifyAdmin;
 use App\Http\Middleware\VerifyCsrfToken;
+use App\Http\Middleware\VerifyProfileAccess;
 use Fruitcake\Cors\HandleCors;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
@@ -74,7 +76,6 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-//        'book' => \App\Http\Middleware\VerifyBook::class,
         'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
         'cache.headers' => SetCacheHeaders::class,
@@ -84,5 +85,7 @@ class Kernel extends HttpKernel
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
+        'admin' => VerifyAdmin::class,
+        'profile_access' => VerifyProfileAccess::class,
     ];
 }

@@ -12,6 +12,8 @@ class UserController extends Controller
 
     public function __construct(AuthManager $authManager)
     {
+        $this->middleware('profile_access')->only(['show', 'update']);
+        $this->middleware('admin')->only(['index']);
         $this->authManager = $authManager;
     }
 
@@ -42,19 +44,30 @@ class UserController extends Controller
             ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
         $validated_user_info = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'string|max:255',
             'description' => '',
+            'role' => 'required|string',
             'phone' => 'required|string',
             'city' => 'required|string',
             'country' => 'required|string',
             'about_me' => ''
         ]);
+        $user->update($validated_user_info);
 
-        User::where('id', $id)->update($validated_user_info);
-        return back()->with('success', 'User info updated successfully');
+        $current_role = $user->getRoleNames()[0];
+        $new_role = $validated_user_info['role'];
+
+        if ($new_role != $current_role) {
+            $user->removeRole($current_role);
+            $user->assignRole($new_role);
+        }
+
+        return redirect()
+            ->route('users.show', ['user' => $user->id])
+            ->with('success', 'User info updated successfully');
     }
 }
