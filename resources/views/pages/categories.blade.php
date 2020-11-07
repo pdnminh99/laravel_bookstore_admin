@@ -22,11 +22,11 @@
             <div class="col">
                 <x-card>
                     @slot('card_header')
-                        Categories
+                        tables
                     @endslot
 
                     @slot('card_sub_header')
-                        This table is for admins only
+                        Categories
                     @endslot
 
                     @if(session('success'))

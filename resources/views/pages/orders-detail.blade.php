@@ -105,8 +105,10 @@
                             </div>
                             @enderror
 
-                            <h6 class="heading-small text-muted mb-4">Customer info | <a
-                                    href="/users/{{ $order->customer->id }}">View details</a>
+                            <h6 class="heading-small text-muted mb-4">Customer info
+                                @can('view profiles')
+                                    | <a href="/users/{{ $order->customer->id }}">View details</a>
+                                @endcan
                             </h6>
                             <div class="pl-lg-4">
                                 <div class="row">
@@ -278,8 +280,11 @@
                             </div>
 
                             @isset($order->staff)
-                                <h6 class="heading-small text-muted mb-4">Staff info | <a
-                                        href="/users/{{ $order->staff->id }}">View details</a></h6>
+                                <h6 class="heading-small text-muted mb-4">Staff info
+                                    @can('view profiles')
+                                        | <a href="/users/{{ $order->staff->id }}">View details</a>
+                                    @endcan
+                                </h6>
                                 <div class="pg-lg-4">
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -323,8 +328,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6 text-lg-right text-md-center">
-                                        Total bills: {{ number_format($order->total_bill()) . "$" }}
+                                    <div class="col-lg-6 text-lg-right text-md-center h1 mt-4">
+                                        Total: {{ number_format($order->total_bill()) . "$" }}
                                     </div>
                                 </div>
                             </div>

@@ -40,7 +40,7 @@ class OrderController extends Controller
             'orders' => $paginator->items(),
             'page_number' => $paginator->currentPage(),
             'pages' => $paginator->lastPage(),
-            'username' => $this->authManager->user()->name
+            'user' => $this->authManager->user()
         ]);
     }
 
@@ -57,7 +57,7 @@ class OrderController extends Controller
                 'items' => $paginator->items(),
                 'page_number' => $paginator->currentPage(),
                 'pages' => $paginator->lastPage(),
-                'username' => $this->authManager->user()->name
+                'user' => $this->authManager->user()
             ]);
     }
 

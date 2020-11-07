@@ -22,11 +22,11 @@
             <div class="col">
                 <x-card>
                     @slot('card_header')
-                        Orders
+                        table
                     @endslot
 
                     @slot('card_sub_header')
-                        This table is for admins only
+                        Orders
                     @endslot
 
                     <x-table :records="$orders"></x-table>

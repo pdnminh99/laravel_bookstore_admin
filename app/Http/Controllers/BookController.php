@@ -27,7 +27,7 @@ class BookController extends Controller
             'books' => $paginator->items(),
             'page_number' => $paginator->currentPage(),
             'pages' => $paginator->lastPage(),
-            'username' => $this->authManager->user()->name
+            'user' => $this->authManager->user()
         ]);
     }
 
@@ -36,7 +36,7 @@ class BookController extends Controller
         return view('pages.books-detail',
             [
                 'book' => new Book(),
-                'username' => $this->authManager->user()->name,
+                'user' => $this->authManager->user(),
                 'action' => "/books",
                 'method' => "POST"
             ]);
@@ -96,7 +96,7 @@ class BookController extends Controller
         return view('pages.books-detail',
             [
                 'book' => $book,
-                'username' => $this->authManager->user()->name,
+                'user' => $this->authManager->user(),
                 'action' => "/books/$id",
                 'method' => "PATCH"
             ]);

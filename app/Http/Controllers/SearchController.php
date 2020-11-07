@@ -29,7 +29,7 @@ class SearchController extends Controller
                 'page_number' => 0,
                 'pages' => 0
             ],
-            'username' => Auth::user()->name,
+            'user' => Auth::user(),
             'keyword' => $keyword
         ]);
     }

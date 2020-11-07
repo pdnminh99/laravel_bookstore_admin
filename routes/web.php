@@ -22,8 +22,8 @@ use Laravel\Fortify\Fortify;
 */
 
 Route::get('/', function () {
-    return redirect('/home');
-});
+    return redirect('/books?page=1');
+})->name('home');
 
 Fortify::loginView(function () {
     return view('pages.login');
@@ -38,10 +38,6 @@ Fortify::verifyEmailView(function () {
 });
 
 Route::middleware(['verified'])->group(function () {
-    Route::get('/home', function () {
-        return view('pages.dashboard', ['username' => Auth::user()->name]);
-    })->name('home');
-
     Route::get('/search', SearchController::class);
 
     Route::resource('books', BookController::class)
@@ -67,7 +63,7 @@ Route::middleware(['verified'])->group(function () {
 
         return view('pages.orders-filter', [
             'filters' => $filters,
-            'username' => Auth::user()->name
+            'user' => Auth::user()
         ]);
     });
 
@@ -92,10 +88,6 @@ Route::middleware(['verified'])->group(function () {
 
     Route::resource('users', UserController::class)
         ->only(['index', 'show', 'update']);
-
-    Route::get('/setting', function () {
-        return view('pages.settings', ['username' => Auth::user()->name]);
-    });
 
     Route::get('/logout', function () {
         Auth::logout();

@@ -18,11 +18,6 @@ class SideNav extends Component
         $this->auth_manager = $auth_manager;
         $this->navigators = [
             [
-                'text' => 'Dashboard',
-                'icon' => 'ni-tv-2 text-primary',
-                'url' => 'home'
-            ],
-            [
                 'text' => 'Books',
                 'icon' => 'ni-books text-orange',
                 'url' => 'books'
@@ -53,12 +48,7 @@ class SideNav extends Component
                 'text' => 'Profile',
                 'icon' => 'ni-single-02',
                 'url' => "users/$id"
-            ],
-            [
-                'text' => 'Settings',
-                'icon' => 'ni-ui-04',
-                'url' => 'setting'
-            ],
+            ]
         ];
     }
 

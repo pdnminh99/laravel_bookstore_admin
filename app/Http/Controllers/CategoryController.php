@@ -26,7 +26,7 @@ class CategoryController extends Controller
             'categories' => $paginator->items(),
             'page_number' => $paginator->currentPage(),
             'pages' => $paginator->lastPage(),
-            'username' => $this->authManager->user()->name
+            'user' => $this->authManager->user()
         ]);
     }
 
@@ -35,7 +35,7 @@ class CategoryController extends Controller
         return view('pages.categories-detail',
             [
                 'categories' => new Category(),
-                'username' => $this->authManager->user()->name,
+                'user' => $this->authManager->user(),
                 'action' => "/categories",
                 'method' => "POST"
             ]);
@@ -68,7 +68,7 @@ class CategoryController extends Controller
                 'page_number' => $paginator->currentPage(),
                 'pages' => $paginator->lastPage(),
 
-                'username' => $this->authManager->user()->name,
+                'user' => $this->authManager->user(),
                 'action' => "/categories/$id",
                 'method' => "PATCH"
             ]);

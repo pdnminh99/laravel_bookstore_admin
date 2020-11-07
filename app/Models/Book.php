@@ -44,7 +44,7 @@ class Book extends Model implements TabularRecord
             TabularField::parse_text($this->id, null, "/books/$this->id"),
             TabularField::parse_text($this->title, null, "/books/$this->id"),
             TabularField::parse_text($this->author),
-            TabularField::parse_text($this->category->name),
+            TabularField::parse_text($this->category->name, null, "/categories/{$this->category->id}"),
             TabularField::parse_status($stock_status),
             TabularField::parse_text("$price$"),
             TabularField::new_actions_builder('books')
