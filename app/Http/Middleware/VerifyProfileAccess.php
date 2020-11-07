@@ -29,9 +29,17 @@ class VerifyProfileAccess
                 redirect()
                     ->route('users.show', ['user' => $current_user->id])
                     ->withErrors('User not found!');
-        if ($current_user->getRoleNames()[0] == AccessRole::ADMIN ||
-            $current_user->id == $requested_user->id
-        ) return $next($request);
-        return redirect()->route('users.show', ['user' => $current_user->id]);
+
+        $role = $current_user->getRoleNames()[0];
+        $current_user_id = $current_user->id;
+        $requested_user_id = $requested_user->id;
+
+        $should_block = $role != AccessRole::ADMIN &&
+            $current_user_id != $requested_user_id;
+
+        if ($should_block) return redirect()->route('users.show', ['user' => $current_user->id])
+            ->with('warning', "Route access not allowed!");
+
+        return $next($request);
     }
 }

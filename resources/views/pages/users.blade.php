@@ -11,7 +11,6 @@
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <x-breadcrumb :routes="[['title' => 'User', 'active' => true]]"></x-breadcrumb>
-                    {{-- @include('components.control') --}}
                 </div>
             </div>
         </div>
@@ -22,11 +21,11 @@
             <div class="col">
                 <x-card>
                     @slot('card_header')
-                        Users
+                        table
                     @endslot
 
                     @slot('card_sub_header')
-                        This table is for admins only
+                        Users
                     @endslot
 
                     @if (count($users) == 0)

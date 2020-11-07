@@ -61,7 +61,7 @@ class OrderController extends Controller
             ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Order $order)
     {
         $validated_order = $request->validate([
             'customer_name' => 'required|string|max:255',
@@ -73,7 +73,54 @@ class OrderController extends Controller
             'status' => 'required|string'
         ]);
 
-        Order::where('id', $id)->update($validated_order);
+        $has_changes = false;
+
+        // Compare & Apply customer_name
+        if ($order->customer_name != $validated_order['customer_name']) {
+            $order->customer_name = $validated_order['customer_name'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply customer_phone
+        if ($order->customer_phone != $validated_order['customer_phone']) {
+            $order->customer_phone = $validated_order['customer_phone'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply customer_address
+        if ($order->customer_address != $validated_order['customer_address']) {
+            $order->customer_address = $validated_order['customer_address'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply customer_country
+        if ($order->customer_country != $validated_order['customer_country']) {
+            $order->customer_country = $validated_order['customer_country'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply customer_city
+        if ($order->customer_city != $validated_order['customer_city']) {
+            $order->customer_city = $validated_order['customer_city'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply note
+        if ($order->note != $validated_order['note']) {
+            $order->note = $validated_order['note'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply status
+        if ($order->status != $validated_order['status']) {
+            $order->status = $validated_order['status'];
+            $has_changes = true;
+        }
+
+        if (!$has_changes)
+            return back()->with('warning', 'Cannot apply updates because no changes found!');
+
+        $order->save();
         return back()->with('success', 'Order info updated successfully');
     }
 

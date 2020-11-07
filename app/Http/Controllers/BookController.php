@@ -118,15 +118,61 @@ class BookController extends Controller
             'year_of_publishing' => "required|integer|between:0,$current_year"
         ]);
 
-        $book->title = $validated_book['title'];
-        $book->author = $validated_book['author'];
-        $book->publisher = $validated_book['publisher'];
-        $book->description = $validated_book['description'];
-        $book->price = $validated_book['price'];
-        $book->in_stock = $validated_book['in_stock'];
-        $book->pages = $validated_book['pages'];
-        $book->category_id = $validated_book['category_id'];
-        $book->year_of_publishing = $validated_book['year_of_publishing'];
+        $has_changes = false;
+
+        // Compare & Apply title
+        if ($book->title != $validated_book['title']) {
+            $book->title = $validated_book['title'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply author
+        if ($book->author != $validated_book['author']) {
+            $book->author = $validated_book['author'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply publisher
+        if ($book->publisher != $validated_book['publisher']) {
+            $book->publisher = $validated_book['publisher'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply description
+        if ($book->description != $validated_book['description']) {
+            $book->description = $validated_book['description'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply price
+        if ($book->price != $validated_book['price']) {
+            $book->price = $validated_book['price'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply in_stock
+        if ($book->in_stock != $validated_book['in_stock']) {
+            $book->in_stock = $validated_book['in_stock'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply pages
+        if ($book->in_stock != $validated_book['pages']) {
+            $book->in_stock = $validated_book['pages'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply category_id
+        if ($book->category_id != $validated_book['category_id']) {
+            $book->category_id = $validated_book['category_id'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply year_of_publishing
+        if ($book->year_of_publishing != $validated_book['year_of_publishing']) {
+            $book->year_of_publishing = $validated_book['year_of_publishing'];
+            $has_changes = true;
+        }
 
         $file = $request->file('asset');
 
@@ -139,7 +185,11 @@ class BookController extends Controller
             $image = $book->id . '.' . $type;
             $file->storeAs("books", $image, 'public');
             $book->image = $image;
+
+            $has_changes = true;
         }
+
+        if (!$has_changes) return back()->with('warning', 'Cannot apply updates because no changes found!');
 
         $book->save();
         return redirect()

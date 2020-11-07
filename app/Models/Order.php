@@ -6,6 +6,7 @@ use App\View\Models\TabularField;
 use App\View\Models\TabularRecord;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Order extends Model implements TabularRecord
 {
@@ -50,10 +51,12 @@ class Order extends Model implements TabularRecord
     {
         $total_bill = number_format($this->total_bill());
 
+        $user_can_view_customer_profile = Auth::user()->can('view profiles') || $this->customer->id == Auth::user()->id;
+
         return [
             TabularField::parse_text($this->id, null, "/orders/$this->id"),
-            TabularField::parse_text($this->customer_name),
-            TabularField::parse_text($this->customer->email),
+            TabularField::parse_text($this->customer_name, null, $user_can_view_customer_profile ? "/users/{$this->customer->id}" : null),
+            TabularField::parse_text($this->customer->email, null, $user_can_view_customer_profile ? "/users/{$this->customer->id}" : null),
             TabularField::parse_status($this->status),
             TabularField::parse_text("$total_bill$"),
             TabularField::new_actions_builder('orders')

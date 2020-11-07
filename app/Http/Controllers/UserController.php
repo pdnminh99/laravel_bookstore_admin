@@ -29,7 +29,7 @@ class UserController extends Controller
             'users' => $paginator->items(),
             'page_number' => $paginator->currentPage(),
             'pages' => $paginator->lastPage(),
-            'username' => $this->authManager->user()->name
+            'user' => $this->authManager->user()
         ]);
     }
 
@@ -37,8 +37,8 @@ class UserController extends Controller
     {
         return view('pages.users-detail',
             [
-                'user' => $user,
-                'username' => $this->authManager->user()->name,
+                'customer' => $user,
+                'user' => $this->authManager->user(),
                 'action' => "/users/$user->id"
             ]);
     }
@@ -48,28 +48,63 @@ class UserController extends Controller
         $validated_user_info = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'string|max:255',
-            'role' => 'required|string',
+            'role' => '',
             'phone' => 'required|string',
             'city' => 'required|string',
             'country' => 'required|string',
             'about_me' => ''
         ]);
-        $user->name = $validated_user_info['name'];
-        $user->address = $validated_user_info['address'];
-        $user->phone = $validated_user_info['phone'];
-        $user->city = $validated_user_info['city'];
-        $user->country = $validated_user_info['country'];
-        $user->about_me = $validated_user_info['about_me'] ?? '';
-        $user->save();
+
+        $has_changes = false;
+
+        // Compare & Apply name
+        if ($user->name != $validated_user_info['name']) {
+            $user->name = $validated_user_info['name'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply address
+        if ($user->address != $validated_user_info['address']) {
+            $user->address = $validated_user_info['address'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply phone
+        if ($user->phone != $validated_user_info['phone']) {
+            $user->phone = $validated_user_info['phone'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply city
+        if ($user->city != $validated_user_info['city']) {
+            $user->city = $validated_user_info['city'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply country
+        if ($user->country != $validated_user_info['country']) {
+            $user->country = $validated_user_info['country'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply about_me
+        if ($user->about_me != $validated_user_info['about_me']) {
+            $user->about_me = $validated_user_info['about_me'] ?? '';
+            $has_changes = true;
+        }
 
         $current_role = $user->getRoleNames()[0];
-        $new_role = $validated_user_info['role'];
+        $new_role = $request->input('role', $current_role);
 
         if ($new_role != $current_role) {
             $user->removeRole($current_role);
             $user->assignRole($new_role);
+            $has_changes = true;
         }
 
+        if (!$has_changes) return back()->with('warning', 'Cannot apply updates because no changes found!');
+
+        $user->save();
         return redirect()
             ->route('users.show', ['user' => $user->id])
             ->with('success', 'User info updated successfully');

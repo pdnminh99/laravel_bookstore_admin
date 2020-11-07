@@ -8,7 +8,7 @@
     <x-side-nav></x-side-nav>
 
     <div class="main-content" id="panel">
-        <x-top-nav :username="$user" keyword="{{ $keyword ?? '' }}"></x-top-nav>
+        <x-top-nav :user="$user" keyword="{{ $keyword ?? '' }}"></x-top-nav>
         @hasSection('content')
             @yield('content')
         @endif

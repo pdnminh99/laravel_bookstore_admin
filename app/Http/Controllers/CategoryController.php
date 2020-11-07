@@ -74,14 +74,31 @@ class CategoryController extends Controller
             ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
         $validated_category = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable'
         ]);
 
-        Category::where('id', $id)->update($validated_category);
+        $has_changes = false;
+
+        // Compare & Apply name
+        if ($category->name != $validated_category['name']) {
+            $category->name = $validated_category['name'];
+            $has_changes = true;
+        }
+
+        // Compare & Apply description
+        if ($category->description != $validated_category['description']) {
+            $category->description = $validated_category['description'];
+            $has_changes = true;
+        }
+
+        if (!$has_changes)
+            return back()->with('warning', 'Cannot apply updates because no changes found!');
+
+        $category->save();
         return back()->with('success', 'Category info updated successfully');
     }
 
