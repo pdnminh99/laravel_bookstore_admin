@@ -149,6 +149,8 @@ class BookController extends Controller
 
     public function destroy(Book $book)
     {
+        if (!is_null($book->image)) Storage::disk('public')
+            ->delete("storage/books/" . $book->image);
         $book->delete();
         return back()->with('success', "Book with id $book->id is deleted successfully");
     }

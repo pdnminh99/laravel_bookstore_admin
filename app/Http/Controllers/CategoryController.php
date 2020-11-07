@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -86,6 +87,14 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        $books = $category->books;
+
+        // TODO images are not deleted yet!
+        foreach ($books as $book)
+            if (!is_null($book->image))
+                Storage::disk('public')
+                    ->delete("storage/books/" . $book->image);
+
         $category->delete();
         return back()->with('success', "Category with id $category->id is deleted successfully");
     }

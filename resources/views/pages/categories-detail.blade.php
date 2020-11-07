@@ -104,6 +104,14 @@
                                     >
                                         {{ $method == 'PATCH' ? 'Save changes' : 'Create' }}
                                     </button>
+
+                                    @if($method == 'PATCH')
+                                        <a href="/categories/{{ $category->id }}"
+                                           class="btn btn-outline-secondary mt-4"
+                                        >
+                                            Reset default
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </form>

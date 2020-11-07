@@ -108,10 +108,10 @@
                                                         <input accept="image/*"
                                                                aria-describedby="inputGroupFileAddon01"
                                                                class="custom-file-input"
-                                                               id="inputGroupFile01"
+                                                               id="input-asset"
                                                                name="asset"
                                                                type="file">
-                                                        <label class="custom-file-label" for="inputGroupFile01">
+                                                        <label class="custom-file-label" for="input-asset">
                                                             Choose file
                                                         </label>
                                                     </div>
@@ -174,14 +174,11 @@
                                                         {{ count(\App\Models\Category::all()) == 0 ? 'disabled' : '' }}
                                                     >
                                                         @foreach(\App\Models\Category::all() as $category)
-                                                            @if(isset($book->$category) && $category->id == $book->category->id)
-                                                                <option
-                                                                    value="{{ $category->id }}"
-                                                                    selected>{{ $category->name }}</option>
-                                                            @else
-                                                                <option
-                                                                    value="{{ $category->id }}">{{ $category->name }}</option>
-                                                            @endif
+                                                            <option
+                                                                value="{{ $category->id }}"
+                                                                {{ $category->id == $book->category->id ? 'selected' : '' }}>
+                                                                {{ $category->name }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -290,6 +287,12 @@
                                     >
                                         {{ $method == 'PATCH' ? 'Save changes' : 'Create' }}
                                     </button>
+
+                                    @if($method == 'PATCH')
+                                        <a href="/books/{{ $book->id }}" class="btn btn-outline-secondary mt-4">
+                                            Reset default
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </form>
