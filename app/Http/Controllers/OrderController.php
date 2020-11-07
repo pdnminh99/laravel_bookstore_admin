@@ -107,7 +107,7 @@ class OrderController extends Controller
 
         // Compare & Apply note
         if ($order->note != $validated_order['note']) {
-            $order->note = $validated_order['note'];
+            $order->note = $validated_order['note'] ?? "";
             $has_changes = true;
         }
 

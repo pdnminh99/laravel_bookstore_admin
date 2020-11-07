@@ -23,7 +23,7 @@ class Item extends Model implements TabularRecord
         $total = number_format($this->total());
 
         return [
-            TabularField::parse_text($this->id, null, "/books/$book_id"),
+            TabularField::parse_text($book_id, null, "/books/$book_id"),
             TabularField::parse_text($this->book->title, null, "/books/$book_id"),
             TabularField::parse_text("$price$"),
             TabularField::parse_text("$this->count"),

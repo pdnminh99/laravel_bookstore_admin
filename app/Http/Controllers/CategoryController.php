@@ -48,6 +48,8 @@ class CategoryController extends Controller
             'description' => ''
         ]);
 
+        $validated_category['description'] = $validated_category['description'] ?? "";
+
         Category::insert($validated_category);
         return redirect()
             ->route('categories.index', ['page' => 1])
@@ -78,7 +80,7 @@ class CategoryController extends Controller
     {
         $validated_category = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable'
+            'description' => ''
         ]);
 
         $has_changes = false;
@@ -91,7 +93,7 @@ class CategoryController extends Controller
 
         // Compare & Apply description
         if ($category->description != $validated_category['description']) {
-            $category->description = $validated_category['description'];
+            $category->description = $validated_category['description'] ?? "";
             $has_changes = true;
         }
 

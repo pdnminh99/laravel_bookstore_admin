@@ -27,11 +27,11 @@
             <div class="col">
                 <x-card>
                     @slot('card_header')
-                        {{ $method == 'PATCH' ? "Category id $category->id" : "Create category" }}
+                        {{ $method == 'PATCH' ? "Id: $category->id" : "Create" }}
                     @endslot
 
                     @slot('card_sub_header')
-                        This table is for admins only
+                        {{ $category->name ?? 'Category' }}
                     @endslot
 
                     @if($method == 'PATCH')

@@ -185,7 +185,7 @@
                                                         @foreach(\App\Models\Category::all() as $category)
                                                             <option
                                                                 value="{{ $category->id }}"
-                                                                {{ $category->id == $book->category->id ? 'selected' : '' }}>
+                                                                {{ !is_null($book->$category) && $category->id == $book->category->id ? 'selected' : '' }}>
                                                                 {{ $category->name }}
                                                             </option>
                                                         @endforeach
