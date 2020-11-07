@@ -5,6 +5,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
+use App\Models\Item;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -65,6 +67,14 @@ Route::middleware(['verified'])->group(function () {
             'filters' => $filters,
             'user' => Auth::user()
         ]);
+    });
+
+    Route::delete('orders/items/{order}/{item}', function (Order $order, Item $item) {
+        $item_name = $item->book->title;
+        $item->delete();
+        return redirect()
+            ->route('orders.show', ['order' => $order->id])
+            ->with('success', "Item $item_name is deleted successfully!");
     });
 
     Route::post('orders/filter', function (Request $request) {

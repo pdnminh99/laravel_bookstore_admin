@@ -58,6 +58,7 @@ class Order extends Model implements TabularRecord
             TabularField::parse_text($this->customer_name, null, $user_can_view_customer_profile ? "/users/{$this->customer->id}" : null),
             TabularField::parse_text($this->customer->email, null, $user_can_view_customer_profile ? "/users/{$this->customer->id}" : null),
             TabularField::parse_status($this->status),
+            TabularField::parse_text($this->created_at),
             TabularField::parse_text("$total_bill$"),
             TabularField::new_actions_builder('orders')
                 ->add_action('details', "/orders/$this->id")
@@ -68,6 +69,6 @@ class Order extends Model implements TabularRecord
 
     public static function get_headers()
     {
-        return ['id', 'customer', 'email', 'status', 'total bills', ''];
+        return ['id', 'customer', 'email', 'status', 'creation date', 'total bills', ''];
     }
 }

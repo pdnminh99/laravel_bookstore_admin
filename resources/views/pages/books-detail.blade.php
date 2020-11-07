@@ -197,6 +197,7 @@
 
                                     <div class="col-lg-6 text-center align-items-center">
                                         <img alt=""
+                                             id="thumbnail-output"
                                              class="img-thumbnail rounded mx-auto img-fluid" style="max-height: 400px"
                                              src="{{ asset(is_null($book->image) ? 'img/no-img.jpg' : "storage/books/$book->image") }}">
                                     </div>
@@ -319,6 +320,21 @@
                 if (e.target.value === '') e.target.value = 0
             })
         })
+
+        document.getElementById('input-asset').addEventListener('change', function (event) {
+            const selectedFile = event.target.files[0];
+            const reader = new FileReader();
+
+            const thumbnailOutput = document.getElementById("thumbnail-output");
+            thumbnailOutput.title = selectedFile.name;
+
+            reader.onload = function (event) {
+                thumbnailOutput.src = event.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+        })
+
     </script>
 
 @endsection

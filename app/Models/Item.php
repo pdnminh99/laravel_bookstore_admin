@@ -30,6 +30,7 @@ class Item extends Model implements TabularRecord
             TabularField::parse_text("$total$"),
             TabularField::new_actions_builder('books')
                 ->add_action('details', "/books/$book_id")
+                ->add_action_w_modal_confirm('delete', "/orders/items/{$this->order->id}/$this->id")
                 ->build()
         ];
     }
@@ -39,7 +40,7 @@ class Item extends Model implements TabularRecord
         return $this->belongsTo('App\Models\Book');
     }
 
-    public function orders()
+    public function order()
     {
         return $this->belongsTo('App\Models\Order');
     }
