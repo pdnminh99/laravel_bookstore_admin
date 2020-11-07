@@ -14,7 +14,7 @@ class BookFactory extends Factory
     {
         return [
             'title' => Str::random(10),
-            'thumbnail_url' => null,
+            'image' => null,
             'author' => Str::random(10),
             'publisher' => Str::random(10),
             'description' => Str::random(10),

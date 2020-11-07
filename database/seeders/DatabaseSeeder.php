@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
             ->count(5)
             ->create();
         Book::factory()
-            ->count(100)
+            ->count(5)
             ->create();
         Order::factory()
             ->count(50)

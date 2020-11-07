@@ -15,7 +15,7 @@ class ItemFactory extends Factory
             'price' => rand(10, 999),
             'count' => rand(1, 10),
             'order_id' => rand(1, 50),
-            'book_id' => rand(1, 100)
+            'book_id' => rand(1, 5)
         ];
     }
 }

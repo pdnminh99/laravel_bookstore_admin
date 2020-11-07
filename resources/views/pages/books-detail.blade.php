@@ -27,15 +27,15 @@
             <div class="col">
                 <x-card>
                     @slot('card_header')
-                        {{ $method == 'PATCH' ? "Book id $book->id" : "Create book" }}
+                        {{ $method == 'PATCH' ? "Book details" : "Create book" }}
                     @endslot
 
                     @slot('card_sub_header')
-                        This table is for admins only
+                        {{ $book->title }}
                     @endslot
 
                     @slot('card_body')
-                        <form action="{{ $action }}" method="POST">
+                        <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method($method)
 
@@ -93,90 +93,109 @@
                             </div>
                             @enderror
 
-                            <h6 class="heading-small text-muted mb-4">Thumbnails</h6>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                        </div>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="inputGroupFile01"
-                                                   aria-describedby="inputGroupFileAddon01">
-                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-
-                                </div>
-                            </div>
-                            <hr class="my-4"/>
-
                             <h6 class="heading-small text-muted mb-4">Basic information</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-title">Title</label>
-                                            <input class="form-control @error('title') is-invalid @enderror"
-                                                   id="input-title"
-                                                   name="title"
-                                                   placeholder="Title"
-                                                   type="text"
-                                                   value="{{ $book->title ?? '' }}">
+                                        <div class="row">
+                                            <div class="col-lg">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"
+                                                              id="inputGroupFileAddon01">Upload</span>
+                                                    </div>
+                                                    <div class="custom-file">
+                                                        <input accept="image/*"
+                                                               aria-describedby="inputGroupFileAddon01"
+                                                               class="custom-file-input"
+                                                               id="inputGroupFile01"
+                                                               name="asset"
+                                                               type="file">
+                                                        <label class="custom-file-label" for="inputGroupFile01">
+                                                            Choose file
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-author">Author</label>
-                                            <input id="input-author"
-                                                   type="text"
-                                                   name="author"
-                                                   class="form-control @error('author') is-invalid @enderror"
-                                                   placeholder="Author"
-                                                   value="{{ $book->author ?? '' }}">
+
+                                        <div class="row">
+                                            <div class="col-lg">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-title">Title</label>
+                                                    <input class="form-control @error('title') is-invalid @enderror"
+                                                           id="input-title"
+                                                           name="title"
+                                                           placeholder="Title"
+                                                           type="text"
+                                                           value="{{ $book->title ?? '' }}">
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-publisher">Publisher</label>
-                                            <input id="input-publisher"
-                                                   type="text"
-                                                   name="publisher"
-                                                   class="form-control @error('publisher') is-invalid @enderror"
-                                                   placeholder="Publisher"
-                                                   value="{{ $book->publisher ?? '' }}">
+
+                                        <div class="row">
+                                            <div class="col-lg">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-author">Author</label>
+                                                    <input id="input-author"
+                                                           type="text"
+                                                           name="author"
+                                                           class="form-control @error('author') is-invalid @enderror"
+                                                           placeholder="Author"
+                                                           value="{{ $book->author ?? '' }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg">
+                                                <div class="form-group">
+                                                    <label class="form-control-label"
+                                                           for="input-publisher">Publisher</label>
+                                                    <input id="input-publisher"
+                                                           type="text"
+                                                           name="publisher"
+                                                           class="form-control @error('publisher') is-invalid @enderror"
+                                                           placeholder="Publisher"
+                                                           value="{{ $book->publisher ?? '' }}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-category-id">
+                                                        Category
+                                                    </label>
+                                                    <select class="form-control"
+                                                            id="input-category-id"
+                                                            name="category_id"
+                                                        {{ count(\App\Models\Category::all()) == 0 ? 'disabled' : '' }}
+                                                    >
+                                                        @foreach(\App\Models\Category::all() as $category)
+                                                            @if(isset($book->$category) && $category->id == $book->category->id)
+                                                                <option
+                                                                    value="{{ $category->id }}"
+                                                                    selected>{{ $category->name }}</option>
+                                                            @else
+                                                                <option
+                                                                    value="{{ $category->id }}">{{ $category->name }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-category-id">
-                                                Category
-                                            </label>
-                                            <select class="form-control"
-                                                    id="input-category-id"
-                                                    name="category_id"
-                                                {{ count(\App\Models\Category::all()) == 0 ? 'disabled' : '' }}
-                                            >
-                                                @foreach(\App\Models\Category::all() as $category)
-                                                    @if(isset($book->$category) && $category->id == $book->category->id)
-                                                        <option
-                                                            value="{{ $category->id }}"
-                                                            selected>{{ $category->name }}</option>
-                                                    @else
-                                                        <option
-                                                            value="{{ $category->id }}">{{ $category->name }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                    <div class="col-lg-6 text-center align-items-center">
+                                        <img alt=""
+                                             class="img-thumbnail rounded mx-auto w-75"
+                                             src="{{ asset(is_null($book->image) ? 'img/no-img.jpg' : "storage/books/$book->image") }}">
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
