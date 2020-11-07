@@ -188,7 +188,7 @@
 
                                     <div class="col-lg-6 text-center align-items-center">
                                         <img alt=""
-                                             class="img-thumbnail rounded mx-auto w-75"
+                                             class="img-thumbnail rounded mx-auto img-fluid" style="max-height: 400px"
                                              src="{{ asset(is_null($book->image) ? 'img/no-img.jpg' : "storage/books/$book->image") }}">
                                     </div>
                                 </div>
