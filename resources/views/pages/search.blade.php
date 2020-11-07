@@ -11,7 +11,7 @@
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <x-breadcrumb :routes="[['title' => 'Search', 'active' => true]]"></x-breadcrumb>
-                    @include('components.control')
+                    {{--                    @include('components.control')--}}
                 </div>
             </div>
         </div>
@@ -29,39 +29,55 @@
                         Result for {{ $keyword ?? '' }}
                     @endslot
 
-                    <x-table :records="$books['items']"></x-table>
-
-                    @if($books['pages'] > 1)
-                        @slot('card_footer')
-                            <x-paginator :count="$books['pages']"
-                                         :current="$books['page_number']"
-                                         route="books"></x-paginator>
-                        @endslot
-                    @endif
+                    <x-table :records="$books"></x-table>
                 </x-card>
             </div>
 
             <div class="col-6">
                 <x-card>
                     @slot('card_header')
-                        Orders
+                        Table
                     @endslot
 
                     @slot('card_sub_header')
-                        Result for {{ $keyword ?? '' }}
+                        Orders
                     @endslot
 
-                    <x-table :records="$orders['items']"></x-table>
-
-                    @if($orders['pages'] > 0)
-                        @slot('card_footer')
-                            <x-paginator :count="$orders['pages']"
-                                         :current="$orders['page_number']"
-                                         route="orders"></x-paginator>
-                        @endslot
-                    @endif
+                    <x-table :records="$orders"></x-table>
                 </x-card>
             </div>
+        </div>
+
+        <div class="row">
+            <div class="col-{{ \Illuminate\Support\Facades\Auth::user()->can('view profiles') ? '6' : '12' }}">
+                <x-card>
+                    @slot('card_header')
+                        Table
+                    @endslot
+
+                    @slot('card_sub_header')
+                        Categories
+                    @endslot
+
+                    <x-table :records="$categories"></x-table>
+                </x-card>
+            </div>
+
+            @if(\Illuminate\Support\Facades\Auth::user()->can('view profiles'))
+                <div class="col-6">
+                    <x-card>
+                        @slot('card_header')
+                            Table
+                        @endslot
+
+                        @slot('card_sub_header')
+                            Customers
+                        @endslot
+
+                        <x-table :records="$customers"></x-table>
+                    </x-card>
+                </div>
+            @endif
         </div>
     </div>
 

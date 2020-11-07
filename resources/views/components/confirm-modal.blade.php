@@ -4,18 +4,9 @@
     const confirmModalTitle = document.getElementById('confirm-modal-title')
     const confirmModalBody = document.getElementById('confirm-modal-body')
 
-    function registerConfirmRoute(confirmRoute, onSuccessRoute, method) {
-        onConfirmRoute = () => {
-            let confirmButton = document.getElementById('confirm-btn')
-            let cancelButton = document.getElementById('cancel-btn')
-
-            confirmButton.disabled = true
-            cancelButton.disabled = true
-            fetch(confirmRoute, {
-                headers: {'X-CSRF-TOKEN': '{!! csrf_token() !!}'},
-                method
-            }).finally(_ => window.location.href = onSuccessRoute)
-        }
+    function registerConfirmRoute(confirmRoute) {
+        const confirmModalForm = document.getElementById('confirm-modal-form')
+        confirmModalForm.action = confirmRoute
     }
 </script>
 
@@ -29,11 +20,14 @@
                 </button>
             </div>
             <div class="modal-body">Are you sure?</div>
-            <div class="modal-footer">
+            <form id="confirm-modal-form" class="modal-footer" method="POST">
+                @csrf
+                @method('DELETE')
                 <button class="btn btn-secondary" data-dismiss="modal" id="cancel-btn" type="button">Cancel</button>
-                <button class="btn btn-primary" id="confirm-btn" onclick="onConfirmRoute()" type="button">Confirm
+                <button class="btn btn-primary" id="confirm-btn" onclick="onConfirmRoute()" type="submit">
+                    Confirm
                 </button>
-            </div>
+            </form>
         </div>
     </div>
 </div>

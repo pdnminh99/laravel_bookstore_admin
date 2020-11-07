@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use Illuminate\Support\Facades\Request;
+use Illuminate\Auth\AuthManager;
 use Illuminate\View\Component;
 
 class SideNav extends Component
@@ -11,41 +11,44 @@ class SideNav extends Component
 
     public array $userNavigators;
 
-    public function __construct()
+    private AuthManager $auth_manager;
+
+    public function __construct(AuthManager $auth_manager)
     {
+        $this->auth_manager = $auth_manager;
         $this->navigators = [
-            [
-                'text' => 'Dashboard',
-                'icon' => 'ni-tv-2 text-primary',
-                'url' => 'home'
-            ],
             [
                 'text' => 'Books',
                 'icon' => 'ni-books text-orange',
                 'url' => 'books'
             ],
             [
-                'text' => 'Orders',
-                'icon' => 'ni-credit-card text-primary',
-                'url' => 'order'
+                'text' => 'Categories',
+                'icon' => 'ni-collection text-blue',
+                'url' => 'categories'
             ],
             [
-                'text' => 'Customers',
-                'icon' => 'ni-single-02 text-yellow',
-                'url' => 'customer'
+                'text' => 'Orders',
+                'icon' => 'ni-credit-card text-primary',
+                'url' => 'orders'
             ],
         ];
+
+        if ($this->auth_manager->user()->hasPermissionTo('view profiles'))
+            array_push($this->navigators, [
+                'text' => 'Users',
+                'icon' => 'ni-single-02 text-yellow',
+                'url' => 'users'
+            ]);
+
+        $id = $this->auth_manager->user()->id;
+
         $this->userNavigators = [
             [
                 'text' => 'Profile',
                 'icon' => 'ni-single-02',
-                'url' => 'profile'
-            ],
-            [
-                'text' => 'Settings',
-                'icon' => 'ni-ui-04',
-                'url' => 'setting'
-            ],
+                'url' => "users/$id"
+            ]
         ];
     }
 

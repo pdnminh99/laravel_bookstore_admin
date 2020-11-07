@@ -3,7 +3,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             @include('components.search-bar', ['keyword' => $keyword])
             @include('components.top-nav-control')
-            <x-user-control :username="$username"></x-user-control>
+            <x-user-control :user="$user"></x-user-control>
         </div>
     </div>
 </nav>

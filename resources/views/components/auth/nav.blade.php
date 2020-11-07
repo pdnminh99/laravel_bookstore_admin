@@ -28,11 +28,6 @@
             </div>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a href="/" class="nav-link">
-                        <span class="nav-link-inner--text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="/login" class="nav-link">
                         <span class="nav-link-inner--text">Login</span>
                     </a>

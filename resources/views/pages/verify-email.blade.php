@@ -6,7 +6,7 @@
             <div class="text-center text-muted mb-4">
                 <small>Verify email</small>
             </div>
-            <div>
+            <div class="text-center">
                 @csrf
                 An email is sent to your inbox!
                 <div class="text-center">

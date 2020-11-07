@@ -10,8 +10,8 @@
         <div class="container-fluid">
             <div class="header-body">
                 <div class="row align-items-center py-4">
-                    <x-breadcrumb :routes="[['title' => 'Book', 'active' => true]]"></x-breadcrumb>
-                    @include('components.control', ['controls' => [['name' => 'New', 'url' => '/books/create']]])
+                    <x-breadcrumb :routes="[['title' => 'Category', 'active' => true]]"></x-breadcrumb>
+                    @include('components.control', ['controls' => [['name' => 'New', 'url' => '/categories/create']]])
                 </div>
             </div>
         </div>
@@ -22,11 +22,11 @@
             <div class="col">
                 <x-card>
                     @slot('card_header')
-                        table
+                        tables
                     @endslot
 
                     @slot('card_sub_header')
-                        Books
+                        Categories
                     @endslot
 
                     @if(session('success'))
@@ -40,7 +40,7 @@
                         </div>
                     @endif
 
-                    @if (count($books) == 0)
+                    @if (count($categories) == 0)
                         @slot('card_body')
                             <div class="text-center">
                                 <img class="rounded" src="{{ asset('/img/icons/nothing-here.png') }}"
@@ -48,12 +48,12 @@
                             </div>
                         @endslot
                     @else
-                        <x-table :records="$books"></x-table>
+                        <x-table :records="$categories"></x-table>
                     @endif
 
                     @if($pages > 1)
                         @slot('card_footer')
-                            <x-paginator :current="$page_number" :count="$pages" route="books"></x-paginator>
+                            <x-paginator :current="$page_number" :count="$pages" route="categories"></x-paginator>
                         @endslot
                     @endif
                 </x-card>

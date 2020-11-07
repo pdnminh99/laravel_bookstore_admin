@@ -2,15 +2,16 @@
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\View\Component;
 
 class UserControl extends Component
 {
-    public ?string $username;
+    public ?Authenticatable $user;
 
-    public function __construct(?string $username)
+    public function __construct(?Authenticatable $user)
     {
-        $this->username = $username;
+        $this->user = $user;
     }
 
     public function render()

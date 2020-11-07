@@ -1,9 +1,14 @@
 <?php
 
 use App\Http\Controllers\BookController;
-use App\Models\Book;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\UserController;
+use App\Models\Item;
+use App\Models\Order;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Fortify;
 
@@ -19,8 +24,8 @@ use Laravel\Fortify\Fortify;
 */
 
 Route::get('/', function () {
-    return redirect('/home');
-});
+    return redirect('/books?page=1');
+})->name('home');
 
 Fortify::loginView(function () {
     return view('pages.login');
@@ -35,68 +40,64 @@ Fortify::verifyEmailView(function () {
 });
 
 Route::middleware(['verified'])->group(function () {
-    Route::get('/home', function () {
-        return view('pages.dashboard', ['username' => Auth::user()->name]);
-    })->name('home');
+    Route::get('/search', SearchController::class);
 
-    Route::get('/search', function () {
-        $keyword = Request::query('keyword');
-        if (!isset($keyword) || $keyword == '') return redirect()->route('home');
+    Route::resource('books', BookController::class)
+        ->except(['edit']);
 
-        // ref: https://stackoverflow.com/questions/37464060/laravel-search-database-table-for-partial-match-from-query
-        $books = Book::where([
-            ['title', 'like', "%$keyword%"]
-        ])->paginate(10);
+    Route::resource('categories', CategoryController::class);
 
-        return view('pages.search', [
-            'books' => [
-                'items' => $books->items(),
-                'pages' => $books->lastPage(),
-                'page_number' => $books->currentPage()
-            ],
-            'orders' => [
-                'items' => [],
-                'page_number' => 0,
-                'pages' => 0
-            ],
-            'username' => Auth::user()->name,
-            'keyword' => $keyword
+    Route::get('orders/filter', function (Illuminate\Http\Request $request) {
+        $filters = $request->session()->get('filters');
+
+        if (!isset($filters['creation_date'])) {
+            $filters['creation_date'] = 'ASC';
+        }
+        if (!isset($filters['status'])) {
+            $filters['status'] = 'NONE';
+        }
+        if (!isset($filters['from'])) {
+            $filters['from'] = date('Y-m-d', 0);
+        }
+        if (!isset($filters['to'])) {
+            $filters['to'] = date('Y-m-d');
+        }
+
+        return view('pages.orders-filter', [
+            'filters' => $filters,
+            'user' => Auth::user()
         ]);
     });
 
-    Route::resource('books', BookController::class)->except(['edit']);
+    Route::delete('orders/items/{order}/{item}', function (Order $order, Item $item) {
+        $item_name = $item->book->title;
+        $item->delete();
+        return redirect()
+            ->route('orders.show', ['order' => $order->id])
+            ->with('success', "Item $item_name is deleted successfully!");
+    });
 
-    Route::get('/order', function () {
-        $page_number = Request::query('page') ?? 1;
+    Route::post('orders/filter', function (Request $request) {
+        $earliest_date = date('Y-m-d', 0);
+        $today = date('Y-m-d');
+        $from = $request->input('from');
+        $to = $request->input('to');
 
-        return view('pages.orders', [
-            'orders' => [],
-            'page_number' => $page_number,
-            'pages' => 20,
-            'username' => Auth::user()->name
+        $filters = $request->validate([
+            'from' => "required|date_format:Y-m-d|before_or_equal:$to|after_or_equal:$earliest_date",
+            'to' => "required|date_format:Y-m-d|before_or_equal:$today|after_or_equal:$from",
+            'status' => 'required|string',
+            'creation_date' => 'required|string'
         ]);
+        session(['filters' => $filters]);
+        return redirect()->to('/orders?page=1');
     });
 
-    Route::get('/customer', function () {
-        $page_number = Request::query('page') ?? 1;
+    Route::resource('orders', OrderController::class)
+        ->only(['index', 'show', 'update', 'destroy']);
 
-        return view('pages.customers', [
-            'customers' => [],
-            'page_number' => $page_number,
-            'pages' => 20,
-            'username' => Auth::user()->name
-        ]);
-    });
-
-    Route::get('/profile', function () {
-        return view('pages.profile', [
-            'user' => Auth::user(),
-            'username' => Auth::user()->name]);
-    });
-
-    Route::get('/setting', function () {
-        return view('pages.settings', ['username' => Auth::user()->name]);
-    });
+    Route::resource('users', UserController::class)
+        ->only(['index', 'show', 'update']);
 
     Route::get('/logout', function () {
         Auth::logout();

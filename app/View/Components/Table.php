@@ -17,9 +17,13 @@ class Table extends Component
             if ($record instanceof TabularRecord) continue;
             throw new \Error("Invalid value passed into table.");
         }
-        $is_exist = count($records) > 0;
-        $this->headers = $is_exist ? get_class($records[0])::get_headers() : [];
         $this->records = $records;
+        $this->headers = $this->is_exist() ? get_class($records[0])::get_headers() : [];
+    }
+
+    public function is_exist()
+    {
+        return isset($this->records) && count($this->records) > 0;
     }
 
     public function render()

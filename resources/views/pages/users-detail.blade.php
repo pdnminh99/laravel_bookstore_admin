@@ -1,24 +1,47 @@
 @extends('layouts.admin')
 
+@section('header')
+    @include('components.confirm-modal')
+@endsection
+
 @section('content')
-    @include('components.profile.header')
+
+    <div class="header bg-primary pb-6">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center py-4">
+                    <x-breadcrumb
+                        :routes='[["title" => "User", "active" => $user->can("view profiles") ? false : true, "url" => $user->can("view profiles") ? "/users?page=1" : null], ["title" => "$user->id", "active" => false]]'></x-breadcrumb>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container-fluid mt--6">
         <div class="row">
-            <div class="col-xl-12 order-xl-1">
-                <x-card :card_action="['route'=>'', 'name' => 'Save']">
+            <div class="col">
+                <x-card>
                     @slot('card_header')
-                        Edit profile
+                        {{ $customer->getRoleNames()[0] ?? 'unknown role' }}
                     @endslot
 
                     @slot('card_sub_header')
-                        {{ $user->name }}
+                        {{ $customer->name }}
                     @endslot
 
                     @slot('card_body')
-                        <form action="/profile" method="POST">
-                            @method('PATCH')
+                        <form action="{{ $action }}" method="POST">
                             @csrf
+                            @method('PATCH')
+
+                            @if(session('warning'))
+                                <div class="alert alert-warning" role="alert">
+                                    {{ session('warning') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
 
                             @if(session('success'))
                                 <div class="alert alert-success" role="alert">
@@ -65,6 +88,15 @@
                             </div>
                             @enderror
 
+                            @error('role')
+                            <div class="alert alert-danger" role="alert">
+                                {{ $message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @enderror
+
                             @error('city')
                             <div class="alert alert-danger" role="alert">
                                 {{ $message }}
@@ -94,7 +126,7 @@
                                                    name="name"
                                                    class="form-control @error('name') is-invalid @enderror"
                                                    placeholder="Username"
-                                                   value="{{ $user->name }}">
+                                                   value="{{ $customer->name }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -105,9 +137,35 @@
                                                    disabled
                                                    class="form-control @error('email') is-invalid @enderror"
                                                    placeholder="email input here..."
-                                                   value="{{ $user->email }}">
+                                                   value="{{ $customer->email }}">
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-role">
+                                                Role
+                                            </label>
+                                            <select class="form-control @error('role') is-invalid @enderror"
+                                                    id="input-role"
+                                                    name="role"
+                                                {{ \Illuminate\Support\Facades\Auth::id() != $customer->id && $user->can('edit profiles') ? '' : 'disabled' }}
+                                            >
+                                                <option value="{{ \App\Models\AccessRole::EDITOR }}"
+                                                    {{ $customer->getRoleNames()[0] == \App\Models\AccessRole::EDITOR ? 'selected' : '' }}>
+                                                    Editor
+                                                </option>
+                                                <option value="{{ \App\Models\AccessRole::ADMIN }}"
+                                                    {{ $customer->getRoleNames()[0] == \App\Models\AccessRole::ADMIN ? 'selected' : '' }}>
+                                                    Admin
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                             <hr class="my-4"/>
@@ -122,7 +180,7 @@
                                                    class="form-control @error('address') is-invalid @enderror"
                                                    name="address"
                                                    placeholder="Home Address"
-                                                   value="{{ $user->address ?? '' }}" type="text">
+                                                   value="{{ $customer->address }}" type="text">
                                         </div>
                                     </div>
 
@@ -133,7 +191,7 @@
                                                    class="form-control @error('phone') is-invalid @enderror"
                                                    name="phone"
                                                    placeholder="Phone Number"
-                                                   value="{{ $user->phone ?? '' }}" type="tel">
+                                                   value="{{ $customer->phone }}" type="tel">
                                         </div>
                                     </div>
                                 </div>
@@ -143,9 +201,10 @@
                                             <label class="form-control-label" for="input-city">City</label>
                                             <input type="text"
                                                    id="input-city"
+                                                   name="city"
                                                    class="form-control @error('city') is-invalid @enderror"
                                                    placeholder="City"
-                                                   value="{{ $user->city ?? '' }}">
+                                                   value="{{ $customer->city ?? '' }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -156,7 +215,7 @@
                                                    class="form-control @error('country') is-invalid @enderror"
                                                    name="country"
                                                    placeholder="Country"
-                                                   value="{{ $user->country ?? '' }}">
+                                                   value="{{ $customer->country ?? '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -174,7 +233,7 @@
                                         class="form-control @error('about_me') is-invalid @enderror"
                                         placeholder="A few words about you ..."
                                     >
-                                        {{ $user->about_me ?? '' }}
+                                        {{ $customer->about_me ?? '' }}
                                     </textarea>
                                 </div>
 
@@ -188,4 +247,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const numInputs = document.querySelectorAll('input[type=number]')
+
+        numInputs.forEach(function (input) {
+            input.addEventListener('change', function (e) {
+                if (e.target.value === '') e.target.value = 0
+            })
+        })
+    </script>
+
 @endsection

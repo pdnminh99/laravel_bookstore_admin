@@ -10,8 +10,7 @@
         <div class="container-fluid">
             <div class="header-body">
                 <div class="row align-items-center py-4">
-                    <x-breadcrumb :routes="[['title' => 'Book', 'active' => true]]"></x-breadcrumb>
-                    @include('components.control', ['controls' => [['name' => 'New', 'url' => '/books/create']]])
+                    <x-breadcrumb :routes="[['title' => 'User', 'active' => true]]"></x-breadcrumb>
                 </div>
             </div>
         </div>
@@ -26,21 +25,10 @@
                     @endslot
 
                     @slot('card_sub_header')
-                        Books
+                        Users
                     @endslot
 
-                    @if(session('success'))
-                        <div class="col-lg">
-                            <div class="alert alert-success" role="alert">
-                                {{ session('success') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </div>
-                    @endif
-
-                    @if (count($books) == 0)
+                    @if (count($users) == 0)
                         @slot('card_body')
                             <div class="text-center">
                                 <img class="rounded" src="{{ asset('/img/icons/nothing-here.png') }}"
@@ -48,12 +36,12 @@
                             </div>
                         @endslot
                     @else
-                        <x-table :records="$books"></x-table>
+                        <x-table :records="$users"></x-table>
                     @endif
 
                     @if($pages > 1)
                         @slot('card_footer')
-                            <x-paginator :current="$page_number" :count="$pages" route="books"></x-paginator>
+                            <x-paginator :current="$page_number" :count="$pages" route="users"></x-paginator>
                         @endslot
                     @endif
                 </x-card>
